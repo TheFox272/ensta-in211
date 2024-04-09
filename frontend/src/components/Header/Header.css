@@ -6,11 +6,11 @@
   font-size: calc(10px + 2vmin);
 }
 
-.Header-container > :not(:last-child) {
+.Header-container> :not(:last-child) {
   margin-right: 10px;
 }
 
 .Link {
   font-weight: 700;
-  color: white;
+  color: rgb(255, 212, 96);
 }
