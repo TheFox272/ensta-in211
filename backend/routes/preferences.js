@@ -4,10 +4,10 @@ import Preferences from '../entities/preferences.js';
 
 const preferencesRouter = express.Router();
 
-const getAllComments = async (req, res) => {
+const getAllPreferences = async (req, res) => {
     try {
-        const commentRepository = appDataSource.getRepository(Comment);
-        const comments = await commentRepository.find();
+        const preferenceRepository = appDataSource.getRepository(Preferences);
+        const preference = await preferenceRepository.find();
         res.json(comments);
     } catch (error) {
         console.error(error);
@@ -17,9 +17,9 @@ const getAllComments = async (req, res) => {
 
 preferencesRouter.get("/", getAllPreferences);
 
-const createPreferenceMovie = async (req, res) => {
+const createPreference= async (req, res) => {
     try {
-        const preferencesRepository = appDataSource.getRepository(Preferences);
+        const preferenceRepository = appDataSource.getRepository(Preferences);
 
         // Check if the movie exists
         console.log("Movie ID:", req.body.movieId);
@@ -32,8 +32,9 @@ const createPreferenceMovie = async (req, res) => {
         }
 
         // Create the comment with the movie ID
-        const newComment = commentRepository.create({
+        const newPreference = preferenceRepository.create({
             movieId: movie.id,
+            
             content: req.body.content,
             date: new Date()
         });
@@ -49,11 +50,11 @@ const createPreferenceMovie = async (req, res) => {
     }
 };
 
-commentsRouter.post("/new", createCommentWithMovie);
+commentsRouter.post("/new", createPreference);
 
 commentsRouter.delete("/:commentId", function (req, res) {
     appDataSource
-        .getRepository(Comment)
+        .getRepository(Preferences)
         .delete({ id: req.params.commentId })
         .then(function () {
             res.status(204).json({ message: 'Comment successfully deleted' });
