@@ -28,6 +28,7 @@ appDataSource
     apiRouter.use('/users', usersRouter);
     apiRouter.use("/movies", moviesRouter);
     apiRouter.use("/comments", commentsRouter);
+    apiRouter.use("/preferences", preferencesRouter);
 
     // Register API router
     app.use('/api', apiRouter);
