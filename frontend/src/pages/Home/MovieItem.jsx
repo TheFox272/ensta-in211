@@ -4,7 +4,7 @@ import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 import noPosterImage from './noPoster.png'; // Import the no poster image
 import { Link } from 'react-router-dom';
 
-function MovieItem(movie) {
+function MovieItem({ movie }) {
     const [isExpanded, setIsExpanded] = useState(false); // State to track expansion state
 
     const toggleExpansion = () => {
