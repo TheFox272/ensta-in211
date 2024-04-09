@@ -1,6 +1,7 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Preferences from '../entities/preferences.js';
+import Movie from '../entities/movie.js';
 
 const preferencesRouter = express.Router();
 
@@ -31,19 +32,19 @@ const createPreference= async (req, res) => {
             return;
         }
 
-        // Create the comment with the movie ID
+        // Create the preference with the movie ID
         const newPreference = preferenceRepository.create({
             movieId: movie.id,
-            
-            content: req.body.content,
+            review: comment
             date: new Date()
+
         });
 
-        // Save the comment
-        const savedComment = await commentRepository.save(newComment);
+        // Save the preference
+        const savedPreference = await preferenceRepository.save(newPreference);
 
-        // Return the created comment
-        res.status(201).json(savedComment);
+        // Return the created preference
+        res.status(201).json(savedPreference);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error while creating the comment' });

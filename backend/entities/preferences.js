@@ -1,4 +1,6 @@
 import typeorm from 'typeorm';
+import Movie from './movie.js';
+import Comment from './comment.js';
 
 const Preferences = new typeorm.EntitySchema({
   name: 'Preferences',
@@ -36,6 +38,12 @@ const Preferences = new typeorm.EntitySchema({
       cascade: true, // Optionnel: pour des opérations en cascade
       // Vous pouvez aussi ajouter `eager: true` si vous voulez toujours charger les films avec les préférences
     }
+    comment: { 
+        type: 'many-to-one',
+        target: 'Comment',
+        joinColumn: true,
+        onDelete: 'CASCADE',
+    },
   }
 });
 
