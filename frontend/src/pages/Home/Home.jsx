@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MovieItem from './MovieItem';
+import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 import popcorn from './popcorn.svg';
 import './Home.css';
 
@@ -7,6 +8,7 @@ function Home() {
   const [movieName, setMovieName] = useState('');
   const [movies, setMovies] = useState([]);
   const [fetchComplete, setFetchComplete] = useState(false);
+  const [popupIsOpen, setPopupIsOpen] = useState(false)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -36,12 +38,16 @@ function Home() {
     };
 
     window.addEventListener('popstate', handlePopstate);
-
+    
     return () => {
       window.removeEventListener('popstate', handlePopstate);
     };
   }, [movieName]);
-
+  
+  function togglePopup() {
+    setPopupIsOpen( !popupIsOpen )
+  }
+  
   const fetchMovies = async (url) => {
     try {
       const response = await fetch(url);
@@ -94,11 +100,20 @@ function Home() {
         <button className="App-scroll" onClick={handleTopSearch}>
           See Top Movies
         </button>
+        <button onClick={() => togglePopup()}>Bouton Popup Provisoire</button>
       </header>
       <div className="movies-list">
         {movies.map(movie => (
           <MovieItem key={movie.id} movie={movie} />
         ))}
+      </div>
+      
+      <div className="popUpBox">
+        {
+          popupIsOpen ?
+          <MoviePopup>Test</MoviePopup>
+          : null
+        }
       </div>
     </div>
   );
