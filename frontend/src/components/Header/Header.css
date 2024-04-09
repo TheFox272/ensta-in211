@@ -12,5 +12,5 @@
 
 .Link {
   font-weight: 700;
-  color: rgb(255, 212, 96);
+  color: var(--link-color);
 }

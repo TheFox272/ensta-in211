@@ -80,6 +80,18 @@ function Home() {
     await getMovies(movieName);
   };
 
+  const [bgColor, setBgColor] = useState('white'); // Initial background color
+
+  // Function to handle mouse enter event
+  const handleMouseEnter = () => {
+    setBgColor('lightblue'); // Change background color on mouse enter
+  };
+
+  // Function to handle mouse leave event
+  const handleMouseLeave = () => {
+    setBgColor('white'); // Change background color on mouse leave
+  };
+
   const handleTopSearch = async () => {
     window.history.pushState({}, '', '/');
     await getTopMovies();

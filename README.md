@@ -1,6 +1,10 @@
-# ensta-in211-web
+# IN211
 
-## Backend
+Le projet du cours IN211 consiste en le développement d'un logiciel WEB sous la forme d'un allociné qui recense les films populaires et y permet la navigation.
+
+## 🔧 Fonctionnalités développées 
+
+## 🔙 Backend
 
 ### Project setup
 
@@ -27,7 +31,7 @@ npm run start
 npm run lint
 ```
 
-## Frontend
+## 🖥️ Frontend
 
 ### Project setup
 
