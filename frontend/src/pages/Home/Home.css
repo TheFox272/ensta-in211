@@ -15,7 +15,6 @@
 
   50% {
     transform: scale(1);
-    /* Make it bigger */
   }
 
   100% {
@@ -31,13 +30,13 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: rgb(255, 212, 96);
+  color: var(--text-color);
 }
 
 .App-title {
   font-size: 2em;
   margin-bottom: 20px;
-  color: rgb(255, 212, 96);
+  color: var(--text-color);
 }
 
 .App-search {
@@ -49,8 +48,8 @@
 .App-scroll {
   background-color: transparent;
   font-size: 30px;
-  color: rgb(255, 212, 96);
-  border: 2px solid rgb(255, 212, 96);
+  color: var(--text-color);
+  border: 2px solid var(--text-color);
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -58,8 +57,8 @@
 
 .App-scroll:hover {
   font-size: 30px;
-  background-color: rgb(255, 212, 96);
-  color: rgb(234, 84, 85);
+  background-color: var(--text-color);
+  color: var(--link-color);
 }
 
 @media (prefers-reduced-motion: no-preference) {
