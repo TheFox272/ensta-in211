@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './MovieItem.css'; // Import CSS for MovieItem
+import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 import noPosterImage from './noPoster.png'; // Import the no poster image
 import { Link } from 'react-router-dom';
 
-function MovieItem({ movie }) {
+function MovieItem(movie) {
     const [isExpanded, setIsExpanded] = useState(false); // State to track expansion state
 
     const toggleExpansion = () => {
@@ -33,7 +34,7 @@ function MovieItem({ movie }) {
                     <div className="expanded-info">
                         <h3>{movie.title}</h3>
                         <p className="overview">{movie.overview}</p>
-                        <Link to={`?movie=${movie.id}`} className="see-more-link">See more</Link>
+                        <Link to={`?movie=${movie.id}`} className="see-more-link" onClick={() => alert("EEEUHHH")}>See more</Link>
                     </div>
                 )}
             </div>

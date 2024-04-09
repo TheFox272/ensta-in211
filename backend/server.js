@@ -4,6 +4,7 @@ import cors from 'cors';
 import usersRouter from './routes/users.js';
 import moviesRouter from './routes/movies.js';
 import commentsRouter from './routes/comments.js';
+import preferencesRouter from './routes/preferences.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
@@ -28,6 +29,7 @@ appDataSource
     apiRouter.use('/users', usersRouter);
     apiRouter.use("/movies", moviesRouter);
     apiRouter.use("/comments", commentsRouter);
+    apiRouter.use("/preferences", preferencesRouter);
 
     // Register API router
     app.use('/api', apiRouter);

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import MovieItem from './MovieItem';
+import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 import popcorn from './popcorn.svg';
 import './Home.css';
 
 function Home() {
   const [movieName, setMovieName] = useState('');
   const [movies, setMovies] = useState([]);
+  const [popupIsOpen, setPopupIsOpen] = useState(false)
   const [noSearsh, setNoSearch] = useState(true);
 
   useEffect(() => {
@@ -52,6 +54,10 @@ function Home() {
       setNoSearch(true);
     }
   }, [movies]);
+
+  function togglePopup() {
+    setPopupIsOpen(!popupIsOpen)
+  }
 
   const fetchMovies = async (url) => {
     try {
@@ -113,6 +119,7 @@ function Home() {
             <button className="App-scroll" onClick={handleTopSearch}>
               See Top Movies
             </button>
+            <button onClick={() => togglePopup()}>Bouton Popup Provisoire</button>
           </div>
         )}
         {!noSearsh && (
@@ -123,6 +130,14 @@ function Home() {
           </div>
         )}
       </header>
+
+      <div className="popUpBox">
+        {
+          popupIsOpen ?
+            <MoviePopup>Test</MoviePopup>
+            : null
+        }
+      </div>
     </div>
   );
 }
