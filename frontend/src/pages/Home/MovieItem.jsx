@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './MovieItem.css'; // Import CSS for MovieItem
-import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 import noPosterImage from './noPoster.png'; // Import the no poster image
 import { Link } from 'react-router-dom';
 
@@ -18,6 +17,7 @@ function MovieItem(movie) {
     };
 
     const imageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : noPosterImage; // Conditionally render poster or no poster image
+    console.log(movie)
 
     return (
         <div className="movie-item">

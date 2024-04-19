@@ -119,11 +119,11 @@ function Home() {
           <MovieItem key={movie.id} movie={movie} />
         ))}
       </div>
-      
+
       <div className="popUpBox">
         {
           popupIsOpen ?
-          <MoviePopup>Test</MoviePopup>
+          <MoviePopup movie={movies[0]}>Test</MoviePopup>
           : null
         }
       </div>
