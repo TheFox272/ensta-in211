@@ -7,8 +7,8 @@ import './Home.css';
 function Home() {
   const [movieName, setMovieName] = useState('');
   const [movies, setMovies] = useState([]);
-  const [fetchComplete, setFetchComplete] = useState(false);
   const [popupIsOpen, setPopupIsOpen] = useState(false)
+  const [noSearsh, setNoSearch] = useState(true);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -20,16 +20,19 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    if (fetchComplete && movies.length > 0) {
-      scrollDown();
-    }
-  }, [fetchComplete, movies]);
-
-  useEffect(() => {
     const handlePopstate = () => {
       const params = new URLSearchParams(window.location.search);
       const movieQuery = params.get('movie');
-      if (movieQuery !== movieName) {
+      if (movieQuery === null) {
+        setNoSearch(true);
+        setMovieName('');
+        return
+      }
+      else if (movieQuery === "") {
+        setMovieName('');
+        getTopMovies();
+      }
+      else if (movieQuery !== movieName) {
         setMovieName(movieQuery);
         if (movieQuery) {
           getMovies(movieQuery);
@@ -38,63 +41,63 @@ function Home() {
     };
 
     window.addEventListener('popstate', handlePopstate);
-    
+
     return () => {
       window.removeEventListener('popstate', handlePopstate);
     };
   }, [movieName]);
-  
+
+  useEffect(() => {
+    if (movies.length > 0) {
+      setNoSearch(false);
+    } else {
+      setNoSearch(true);
+    }
+  }, [movies]);
+
   function togglePopup() {
-    setPopupIsOpen( !popupIsOpen )
+    setPopupIsOpen(!popupIsOpen)
   }
-  
+
   const fetchMovies = async (url) => {
     try {
       const response = await fetch(url);
       const data = await response.json();
       setMovies(data.results);
-      setFetchComplete(true);
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
   };
 
   const getMovies = async (query) => {
-    setFetchComplete(false);
     const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&include_video=false&language=en-US&query=${query}&page=1&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
     await fetchMovies(url);
   };
 
   const getTopMovies = async () => {
-    setFetchComplete(false);
     const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb';
     await fetchMovies(url);
   };
 
-  const scrollDown = () => {
-    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-  };
-
   const handleSearch = async () => {
     window.history.pushState({}, '', `?movie=${encodeURIComponent(movieName)}`);
-    await getMovies(movieName);
-  };
-
-  const [bgColor, setBgColor] = useState('white'); // Initial background color
-
-  // Function to handle mouse enter event
-  const handleMouseEnter = () => {
-    setBgColor('lightblue'); // Change background color on mouse enter
-  };
-
-  // Function to handle mouse leave event
-  const handleMouseLeave = () => {
-    setBgColor('white'); // Change background color on mouse leave
+    if (movieName === '') {
+      await getTopMovies();
+    }
+    else {
+      await getMovies(movieName);
+    }
   };
 
   const handleTopSearch = async () => {
-    window.history.pushState({}, '', '/');
+    window.history.pushState({}, '', `?movie=`);
     await getTopMovies();
+  };
+
+  const handleKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      await handleSearch();
+    }
   };
 
   return (
@@ -106,25 +109,33 @@ function Home() {
           className='App-search'
           placeholder="Search for movies"
           value={movieName}
-          onChange={e => setMovieName(e.target.value)} />
+          onChange={e => setMovieName(e.target.value)}
+          onKeyDown={handleKeyDown} />
         <button className='App-search' onClick={handleSearch}>Search</button>
-        <img src={popcorn} className="App-logo" alt="logo" />
-        <button className="App-scroll" onClick={handleTopSearch}>
-          See Top Movies
-        </button>
-        <button onClick={() => togglePopup()}>Bouton Popup Provisoire</button>
+        {/* Only display the followings if there is no active searsh */}
+        {noSearsh && (
+          <div className="App-void">
+            <img src={popcorn} className="App-logo" alt="logo" />
+            <button className="App-scroll" onClick={handleTopSearch}>
+              See Top Movies
+            </button>
+            <button onClick={() => togglePopup()}>Bouton Popup Provisoire</button>
+          </div>
+        )}
+        {!noSearsh && (
+          <div className="movies-list">
+            {movies.map(movie => (
+              <MovieItem key={movie.id} movie={movie} />
+            ))}
+          </div>
+        )}
       </header>
-      <div className="movies-list">
-        {movies.map(movie => (
-          <MovieItem key={movie.id} movie={movie} />
-        ))}
-      </div>
 
       <div className="popUpBox">
         {
           popupIsOpen ?
-          <MoviePopup movie={movies[0]}>Test</MoviePopup>
-          : null
+            <MoviePopup>Test</MoviePopup>
+            : null
         }
       </div>
     </div>
