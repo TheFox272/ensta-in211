@@ -10,6 +10,7 @@
 .popup {
     position: fixed;
     width: 70%;
+    height: 590px;
     top: 20%;
     left: 15%;
     background-color: var(--bg-color-dark);
@@ -20,22 +21,29 @@
 }
 
 .popup .leftSide, .popup .rightSide {
-    height: 550px;
+    height: 100%;
     width: 550px;
 }
 
 .popup .leftSide img {
     height: 100%;
+    display: flex;
+    justify-content: center;
+    border-radius: 15px;
 }
 
 .popup .rightSide {
     padding: 20px;
 }
+.popup .rightSide h1 {
+    font-size: 3em;
+}
 
-.popup .rightSide button.close-button {
-    border-color: var(--text-color);
-    border-radius: 2px;
-    height: 75px;
-    width: 175px;
-    background-color: var(--bg-color-dark);
+.popup .rightSide p {
+    font-size: 1.5em;
+    text-align: left;
+}
+
+.popup .rightSide button.close-button:hover{
+    cursor: pointer;
 }

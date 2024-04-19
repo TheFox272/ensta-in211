@@ -1,0 +1,44 @@
+button {
+    color: var(--text-color);
+    font-size: 30px;
+    border-color: var(--text-color);
+    border-radius: 10px;
+    height: 75px;
+    width: 175px;
+    background-color: var(--bg-color-dark);
+    overflow: hidden;
+    position: relative;
+    line-height: 1;
+}
+
+button .button-decor {
+    position: absolute;
+    inset: 0;
+    background-color: var(--text-color);
+    transform: translateX(-100%);
+    transition: transform .3s;
+    z-index: 0;
+}
+
+button span.label {
+    display: inline-block;
+    transition: color .2s;
+    padding: 2px 1.5rem 2px;
+    padding-left: .75rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 150px;
+  }
+
+button:hover {
+    cursor: pointer;
+}
+
+button:hover .button-decor {
+transform: translate(0);
+}
+
+button:hover span.label {
+    color: "#fff";
+}

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import './MovieItem.css'; // Import CSS for MovieItem
 import noPosterImage from './noPoster.png'; // Import the no poster image
 import { Link } from 'react-router-dom';
+import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 
-function MovieItem({ movie }) {
+function MovieItem({ movie, openPopup }) {
     const [isExpanded, setIsExpanded] = useState(false); // State to track expansion state
 
     const toggleExpansion = () => {
@@ -21,7 +22,7 @@ function MovieItem({ movie }) {
 
     return (
         <div className="movie-item">
-            <div className="poster-container" onClick={toggleExpansion}>
+            <div className="poster-container" onClick={openPopup}>
                 <img src={imageUrl} alt={movie.title} />
                 {!isExpanded && (
                     <div className="basic-info">
@@ -30,13 +31,13 @@ function MovieItem({ movie }) {
                         <p><strong>Rating:</strong> {movie.vote_average}</p>
                     </div>
                 )}
-                {isExpanded && (
+                {/*isExpanded && (
                     <div className="expanded-info">
                         <h3>{movie.title}</h3>
                         <p className="overview">{movie.overview}</p>
-                        <Link to={`?movie=${movie.id}`} className="see-more-link" onClick={() => alert("EEEUHHH")}>See more</Link>
+                        <Link to={`?movie=${movie.id}`} className="see-more-link">See more</Link>
                     </div>
-                )}
+                )*/}
             </div>
         </div>
     );

@@ -3,11 +3,13 @@ import MovieItem from './MovieItem';
 import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 import popcorn from './popcorn.svg';
 import './Home.css';
+import { SliderButton } from '../../components/sliderButton/SliderButton';
 
 function Home() {
   const [movieName, setMovieName] = useState('');
   const [movies, setMovies] = useState([]);
   const [popupIsOpen, setPopupIsOpen] = useState(false)
+  const [activeMovieIndex, setActiveMovieIndex] = useState(0)
   const [noSearsh, setNoSearch] = useState(true);
 
   useEffect(() => {
@@ -55,7 +57,8 @@ function Home() {
     }
   }, [movies]);
 
-  function togglePopup() {
+  function togglePopup(index) {
+    setActiveMovieIndex(index)
     setPopupIsOpen(!popupIsOpen)
   }
 
@@ -119,13 +122,12 @@ function Home() {
             <button className="App-scroll" onClick={handleTopSearch}>
               See Top Movies
             </button>
-            <button onClick={() => togglePopup()}>Bouton Popup Provisoire</button>
           </div>
         )}
         {!noSearsh && (
           <div className="movies-list">
-            {movies.map(movie => (
-              <MovieItem key={movie.id} movie={movie} />
+            {movies.map((movie, index) => (
+              <MovieItem key={movie.id} movie={movie} openPopup={() => togglePopup(index)}/>
             ))}
           </div>
         )}
@@ -134,7 +136,7 @@ function Home() {
       <div className="popUpBox">
         {
           popupIsOpen ?
-            <MoviePopup>Test</MoviePopup>
+            <MoviePopup movie={movies[activeMovieIndex]} closePopup={() => togglePopup(0)}>Test</MoviePopup>
             : null
         }
       </div>
