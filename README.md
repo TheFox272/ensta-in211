@@ -4,6 +4,8 @@ Le projet du cours IN211 consiste en le développement d'un logiciel WEB sous la
 
 ## 🔧 Fonctionnalités développées 
 
+- Ajouter des catégories de playlists personnalisées peut enrichir l'expérience utilisateur
+
 ## 🔙 Backend
 
 ### Project setup
