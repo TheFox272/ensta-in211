@@ -1,0 +1,21 @@
+.add-playlist-form > :not(:last-child) {
+    margin-right: 10px;
+  }
+  
+  .add-playlist-input {
+    padding: 5px;
+  }
+  
+  .add-playlist-button {
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .playlist-creation-success {
+    color: green;
+  }
+  
+  .playlist-creation-error {
+    color: red;
+  }
+  

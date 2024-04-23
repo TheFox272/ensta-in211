@@ -3,9 +3,9 @@ import React from 'react'
 
 export const SliderButton = ({clickFunction, label}) => {
   return (
-    <button onClick={clickFunction}>
+    <button onClick={clickFunction} className="sliderButton">
+      <div className="background-slider"></div>
         <span className="label">{label}</span>
-        <span className="button-decor"></span>
         </button>
   )
 }

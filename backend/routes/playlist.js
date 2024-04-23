@@ -4,18 +4,14 @@ import Playlist from '../entities/playlist.js';
 
 const playlistRouter = express.Router();
 
-const getAllPlaylist = async (req, res) => {
-    try {
-        const playlistRepository = appDataSource.getRepository(Playlist);
-        const playlist = await preferenceRepository.find();
-        res.json(comments);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error while fetching comments' });
-    }
-};
-
-playlistRouter.get("/", getAllPlaylist);
+playlistRouter.get('/', function (req, res) {
+    appDataSource
+      .getRepository(Playlist)
+      .find({})
+      .then(function (playlists) {
+        res.json({ playlists: playlists });
+      });
+  });
 
 const createPlaylist= async (req, res) => {
     try {
@@ -52,7 +48,7 @@ playlistRouter.post("/new", createPlaylist);
 playlistRouter.delete("/:playlistId", function (req, res) {
     appDataSource
         .getRepository(Playlist)
-        .delete({ id: req.params.commentId })
+        .delete({ id: req.params.playlistId })
         .then(function () {
             res.status(204).json({ message: 'Playlist successfully deleted' });
         })
