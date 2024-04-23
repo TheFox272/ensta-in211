@@ -1,0 +1,49 @@
+.popupOuter {
+    position: absolute;
+    background-color: rgba(0, 0, 0, .7);
+    top: 0;
+    bottom: 0;
+    left: 0%;
+    right: 0;
+}
+
+.popup {
+    position: fixed;
+    width: 70%;
+    height: 590px;
+    top: 20%;
+    left: 15%;
+    background-color: var(--bg-color-dark);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0px 0px 50px rgb(143, 169, 204);
+}
+
+.popup .leftSide, .popup .rightSide {
+    height: 100%;
+    width: 550px;
+}
+
+.popup .leftSide img {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.popup .rightSide {
+    padding: 20px;
+}
+.popup .rightSide h1 {
+    font-size: 3em;
+}
+
+.popup .rightSide p {
+    font-size: 1.5em;
+    text-align: left;
+}
+
+.popup .rightSide button.close-button:hover{
+    cursor: pointer;
+}

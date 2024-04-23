@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import MovieItem from './MovieItem';
+import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 import popcorn from './popcorn.svg';
 import './Home.css';
+import { SliderButton } from '../../components/sliderButton/SliderButton';
 
 function Home() {
   const [movieName, setMovieName] = useState('');
   const [movies, setMovies] = useState([]);
-  const [fetchComplete, setFetchComplete] = useState(false);
+  const [popupIsOpen, setPopupIsOpen] = useState(false)
+  const [activeMovieIndex, setActiveMovieIndex] = useState(0)
+  const [noSearsh, setNoSearch] = useState(true);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -18,16 +22,19 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    if (fetchComplete && movies.length > 0) {
-      scrollDown();
-    }
-  }, [fetchComplete, movies]);
-
-  useEffect(() => {
     const handlePopstate = () => {
       const params = new URLSearchParams(window.location.search);
       const movieQuery = params.get('movie');
-      if (movieQuery !== movieName) {
+      if (movieQuery === null) {
+        setNoSearch(true);
+        setMovieName('');
+        return
+      }
+      else if (movieQuery === "") {
+        setMovieName('');
+        getTopMovies();
+      }
+      else if (movieQuery !== movieName) {
         setMovieName(movieQuery);
         if (movieQuery) {
           getMovies(movieQuery);
@@ -42,41 +49,58 @@ function Home() {
     };
   }, [movieName]);
 
+  useEffect(() => {
+    if (movies.length > 0) {
+      setNoSearch(false);
+    } else {
+      setNoSearch(true);
+    }
+  }, [movies]);
+
+  function togglePopup(index) {
+    setActiveMovieIndex(index)
+    setPopupIsOpen(!popupIsOpen)
+  }
+
   const fetchMovies = async (url) => {
     try {
       const response = await fetch(url);
       const data = await response.json();
       setMovies(data.results);
-      setFetchComplete(true);
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
   };
 
   const getMovies = async (query) => {
-    setFetchComplete(false);
     const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&include_video=false&language=en-US&query=${query}&page=1&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
     await fetchMovies(url);
   };
 
   const getTopMovies = async () => {
-    setFetchComplete(false);
     const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb';
     await fetchMovies(url);
   };
 
-  const scrollDown = () => {
-    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-  };
-
   const handleSearch = async () => {
     window.history.pushState({}, '', `?movie=${encodeURIComponent(movieName)}`);
-    await getMovies(movieName);
+    if (movieName === '') {
+      await getTopMovies();
+    }
+    else {
+      await getMovies(movieName);
+    }
   };
 
   const handleTopSearch = async () => {
-    window.history.pushState({}, '', '/');
+    window.history.pushState({}, '', `?movie=`);
     await getTopMovies();
+  };
+
+  const handleKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      await handleSearch();
+    }
   };
 
   return (
@@ -88,17 +112,33 @@ function Home() {
           className='App-search'
           placeholder="Search for movies"
           value={movieName}
-          onChange={e => setMovieName(e.target.value)} />
+          onChange={e => setMovieName(e.target.value)}
+          onKeyDown={handleKeyDown} />
         <button className='App-search' onClick={handleSearch}>Search</button>
-        <img src={popcorn} className="App-logo" alt="logo" />
-        <button className="App-scroll" onClick={handleTopSearch}>
-          See Top Movies
-        </button>
+        {/* Only display the followings if there is no active searsh */}
+        {noSearsh && (
+          <div className="App-void">
+            <img src={popcorn} className="App-logo" alt="logo" />
+            <button className="App-scroll" onClick={handleTopSearch}>
+              See Top Movies
+            </button>
+          </div>
+        )}
+        {!noSearsh && (
+          <div className="movies-list">
+            {movies.map((movie, index) => (
+              <MovieItem key={movie.id} movie={movie} openPopup={() => togglePopup(index)}/>
+            ))}
+          </div>
+        )}
       </header>
-      <div className="movies-list">
-        {movies.map(movie => (
-          <MovieItem key={movie.id} movie={movie} />
-        ))}
+
+      <div className="popUpBox">
+        {
+          popupIsOpen ?
+            <MoviePopup movie={movies[activeMovieIndex]} closePopup={() => togglePopup(0)}>Test</MoviePopup>
+            : null
+        }
       </div>
     </div>
   );
