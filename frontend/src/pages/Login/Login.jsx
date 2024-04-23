@@ -39,6 +39,8 @@ const Login = (props) => {
         // Check if email has an account associated with it
         checkAccountExists(accountExists => {
             // If yes, log in 
+            //la fonction de callback est appelée après que la requête ait été effectuée, cette fonction est
+            //définit ici, accountExists est le paramètre de cette fonction (c'est un booléen et il vaut r.userExists)
             if (accountExists)
                 logIn()
             else
