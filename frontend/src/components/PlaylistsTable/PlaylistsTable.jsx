@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PlaylistsTable.css';
+import PlaylistRow from '../PlaylistRow/PlaylistRow';
 
 const useFetchPlaylists = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -17,92 +18,57 @@ const useFetchPlaylists = () => {
         console.error(error);
       });
   }, []);
-
   return { playlists, playlistsLoadingError };
 };
 
-const useFetchMovies = () => {
+const useFetchMovies = (playlistname) => {
   const [movies, setMovies] = useState([]);
   const [moviesLoadingError, setMoviesLoadingError] = useState(null);
   useEffect(() => {
     axios
-      .get(`https://api.themoviedb.org/3/movie/popular?api_key=522d421671cf75c2cba341597d86403a`)
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovie/${playlistname}`)
       .then((response) => {
-        console.log(response.data);
-        if (response.data) {
-          const movieData = response.data.results.map((movie) => ({ title: movie.original_title, id: movie.id, date: movie.release_date, image: movie.poster_path }));
-          setMovies(movieData);
-          console.log(movies)
-        }
+        setMovies(response.data.movies);
       })
       .catch((error) => {
-        setMoviesLoadingError('An error occured while fetching users.');
+        setMoviesLoadingError('An error occurred while fetching movies.');
         console.error(error);
       });
-  }, []);
+  }, [playlistname]);
   return { movies, moviesLoadingError };
 };
 
-function AddMovieForm({ playlist, onAddMovies }) {
-  const [movie, setMovie] = useState('');
+const Addmovie=()=>{
+  const [playlists, setPlaylists] = useState([]);
+  const [movies, setMovies] = useState([]);
+
+  const handleAddMovie = (playlist, movie) => {
+    axios
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovie/new`, {
+        playlistname: playlist,
+        movieId: movie,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handlePlus = (event) => {
+    event.preventDefault();
+    setShowSearchBar(true);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onAddMovies(playlist, movie);
-    setMovie('');
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={movie}
-        onChange={(e) => setMovie(e.target.value)}
-        placeholder="Ajouter un film"
-      />
-      <button type="submit">Ajouter</button>
-    </form>
-  );
-}
-
-function PlaylistRow({ playlist }) {
-  const [addingMovie, setAddingMovie] = useState(false);
-  
-  const handleAddMovies = (playlist,movie) => {
-    setShowSearchBar(true);
-    axios.post(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovie/new`, { playlistname: playlist.playlistname, movieId: movie })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    setAddingMovie(false);
-  };
-
-  const [deletePlaylist, setDeletePlaylist] = useState(false);
-  const handleDelete = () => {
-    axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlist/:${playlist.id}`)
-      .then((response) => {
-        console.log(response.data);
-        setDeletePlaylist(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  const [showSearchBar, setShowSearchBar] = useState(false);
-  const [movieName, setMovieName] = useState('');
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-    onAddMovies(playlist, movieName);
+    handleAddMovie(playlistname, movieName);
     setMovieName('');
     setShowSearchBar(false);
-  };
+  }
 
-  const handleCancel = () => {
+  const handleCancel = (event) => {
     setShowSearchBar(false);
   };
 
@@ -110,9 +76,9 @@ function PlaylistRow({ playlist }) {
     <div className="playlist-row">
       <span>{playlist.playlistname}</span>
       {!showSearchBar ? (
-        <button onClick={handleAddMovies}>Ajouter des films</button>
+        <button onClick={handlePlus}>Ajouter des films</button>
       ) : (
-        <form onSubmit={handleSearch}>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             value={movieName}
@@ -128,7 +94,7 @@ function PlaylistRow({ playlist }) {
   );
 }
 
-function PlaylistsTable() {
+ const PlaylistsTable =() => {
   const { playlists, playlistsLoadingError } = useFetchPlaylists();
 
   if (playlistsLoadingError) {
@@ -137,11 +103,12 @@ function PlaylistsTable() {
 
   return (
     <div>
-      {playlists.map((playlist) => (
-        <PlaylistRow key={playlist.id} playlist={playlist} />
-      ))}
+      {playlists.map((playlist) => {
+        const movielist = useFetchMovies(playlist.name);
+        return <PlaylistRow key={playlist.name} playlist={playlist.playlistname} movielist={movielist} Addmovie={Addmovie} />;
+      })}
     </div>
   );
-}
+};
 
-export default PlaylistsTable;
+export default PlaylistsTable

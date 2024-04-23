@@ -1,0 +1,25 @@
+.playlist-row {
+    display: flex;
+    align-items: center;
+}
+
+.playlist-row .movie-item:not(:last-child) {
+    margin-right: 10px;
+}
+
+.playlist-row .movie-item:last-child {
+    margin-right: 0;
+}
+
+.playlist-row .add-button {
+    background-color: #4CAF50; /* Couleur de fond */
+    border: none; /* Supprime les bordures */
+    color: white; /* Couleur du texte */
+    padding: 15px 32px; /* Padding autour du texte */
+    text-align: center; /* Centre le texte */
+    text-decoration: none; /* Supprime le soulignement */
+    display: inline-block;
+    font-size: 16px; /* Taille du texte */
+    margin: 4px 2px; /* Marge autour du bouton */
+    cursor: pointer; /* Change le curseur en main lorsque vous survolez */
+}
