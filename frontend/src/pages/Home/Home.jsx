@@ -113,7 +113,7 @@ function Home() {
           placeholder="Search for movies"
           value={movieName}
           onChange={e => setMovieName(e.target.value)}
-          onKeyDown={handleKeyDown} />
+          onKeyDown={() => {handleKeyDown(); handleSearch();}} />
         <SliderButton clickFunction={handleSearch} label={"Search"}/>
         {/* Only display the followings if there is no active searsh */}
         {noSearsh && (
