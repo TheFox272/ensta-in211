@@ -6,10 +6,11 @@ button.sliderButton {
     height: 75px;
     width: 200px;
     background-color: var(--bg-color-dark);
-    /* overflow:auto; */
+    overflow:hidden;
     position: relative;
     line-height: 1;
-    transition: background-color .3s;
+    /* transition: background-color .3s; */
+    z-index: 0;
 }
 
 
@@ -22,12 +23,28 @@ button.sliderButton span.label {
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 150px;
-  }
-
-button.sliderButton:hover {
-    cursor: pointer;
-    background-color: var(--text-color);
 }
+
+button.sliderButton .background-slider {
+    content: '';
+    width: 0;
+    height: 3em;
+    background-color: var(--text-color);
+    transition: all .3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    z-index: -1;
+}
+button.sliderButton {
+    cursor: pointer;
+}
+
+button.sliderButton:hover .background-slider {
+    width: 100%;
+}
+
 
 
 button.sliderButton:hover span.label {
