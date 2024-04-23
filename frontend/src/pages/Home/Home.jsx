@@ -106,7 +106,7 @@ function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className="App-title">eMovies</h1>
+        <h1 className="App-title">Gros Pied en Sah</h1>
         <input
           type="search"
           className='App-search'

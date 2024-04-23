@@ -1,0 +1,17 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.titleContainer {
+    font-size: calc(10px + 2vmin);
+    color: var(--text-color);
+}
+
+.buttonContainer {
+    font-size: calc(10px + 2vmin);
+    color: var(--text-color);
+}

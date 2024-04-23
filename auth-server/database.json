@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "email": "jean.jean@jean.jean",
+      "password": "$2b$10$9eGrewLvhADHSe2EKFvbQeVbmT29z1XB8tRQu0P66UtOsEG4lcExq"
+    },
+    {
+      "email": "jean.jean@jean.com",
+      "password": "$2b$10$GcII5ej/4pXB/5mbSm7xg.hhkJjETznyReMIIWAbrMlgsILyFLVRO"
+    },
+    {
+      "email": "jean.jean@gmail.com",
+      "password": "$2b$10$Fjk2.7jjq1k9M1kxVurSiOlPVzVyIHJCdhJo9FYRRTuhvcjV5KRAC"
+    }
+  ]
+}
