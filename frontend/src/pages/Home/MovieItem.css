@@ -53,54 +53,6 @@
     font-size: 22px;
 }
 
-.expanded-info {
-    position: absolute;
-    /* Position the basic info absolutely */
-    top: 0;
-    /* Position at the bottom */
-    left: 0;
-    /* Position at the left */
-    width: 100%;
-    height: 100%;
-    /* Occupy full width */
-    background-color: var(--bg-color-transparent);
-    /* Semi-transparent black background */
-    padding: 10px;
-    /* Padding for text */
-    color: var(--text-color);
-    /* Text color */
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.expanded-info h3 {
-    text-align: center;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-size: 26px;
-}
-
-.overview {
-    text-align: left;
-    display: -webkit-box;
-    -webkit-line-clamp: 10;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-size: 20px;
-}
-
-.see-more-link {
-    color: var(--link-color);
-    /* Blue color */
-    display: block;
-    /* Display as block element */
-    margin-top: 8px;
-    /* Adjust margin as needed */
-    font-size: 20px;
-}
-
 .poster-container:hover .basic-info {
     opacity: 1;
 }

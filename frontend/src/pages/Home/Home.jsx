@@ -106,26 +106,26 @@ function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className="App-title">Gros Pied en Sah</h1>
+        <h1 className="App-title">GrosPied</h1>
         <input
           type="search"
           className='App-search'
           placeholder="Search for movies"
           value={movieName}
           onChange={e => setMovieName(e.target.value)}
-          onKeyDown={() => {handleKeyDown(); handleSearch();}} />
-        <SliderButton clickFunction={handleSearch} label={"Search"}/>
+          onKeyDown={() => { handleKeyDown(); handleSearch(); }} />
+        <SliderButton clickFunction={handleSearch} label={"Search"} />
         {/* Only display the followings if there is no active searsh */}
         {noSearsh && (
           <div className="App-void">
             <img src={popcorn} className="App-logo" alt="logo" />
-            <SliderButton clickFunction={handleTopSearch} label={"Top Movies"}/>
+            <SliderButton clickFunction={handleTopSearch} label={"Top Movies"} />
           </div>
         )}
         {!noSearsh && (
           <div className="movies-list">
             {movies.map((movie, index) => (
-              <MovieItem key={movie.id} movie={movie} openPopup={() => togglePopup(index)}/>
+              <MovieItem key={movie.id} movie={movie} openPopup={() => togglePopup(index)} />
             ))}
           </div>
         )}
