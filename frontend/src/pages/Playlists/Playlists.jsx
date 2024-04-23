@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Playlists.css';
 import axios from 'axios';
+import { SliderButton } from '../../components/sliderButton/SliderButton';
 
 function Playlists() {
   const [playlists, setPlaylists] = useState([]);
