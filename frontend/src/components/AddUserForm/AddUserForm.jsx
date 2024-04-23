@@ -79,9 +79,7 @@ function AddUserForm() {
             setFormValues({ ...formValues, lastname: event.target.value })
           }
         />
-        <button className="add-user-button" type="submit">
-          Add user
-        </button>
+        <button className="add-user-button" type="submit">Add user</button>
       </form>
       {userCreationSuccess !== null && (
         <div className="user-creation-success">{userCreationSuccess}</div>

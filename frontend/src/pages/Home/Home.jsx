@@ -114,14 +114,12 @@ function Home() {
           value={movieName}
           onChange={e => setMovieName(e.target.value)}
           onKeyDown={handleKeyDown} />
-        <button className='App-search' onClick={handleSearch}>Search</button>
+        <SliderButton clickFunction={handleSearch} label={"Search"}/>
         {/* Only display the followings if there is no active searsh */}
         {noSearsh && (
           <div className="App-void">
             <img src={popcorn} className="App-logo" alt="logo" />
-            <button className="App-scroll" onClick={handleTopSearch}>
-              See Top Movies
-            </button>
+            <SliderButton clickFunction={handleTopSearch} label={"Top Movies"}/>
           </div>
         )}
         {!noSearsh && (

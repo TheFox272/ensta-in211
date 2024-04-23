@@ -11,7 +11,7 @@ const getAllPlaylistMovies = async (req, res) => {
         res.json(comments);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error while fetching comments' });
+        res.status(500).json({ message: 'Error okkkk' });
     }
 };
 
