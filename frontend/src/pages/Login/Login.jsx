@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SliderButton } from '../../components/sliderButton/SliderButton';
+import './Login.css';
 
 const Login = (props) => {
     const [email, setEmail] = useState("")
@@ -113,12 +115,8 @@ const Login = (props) => {
             <label className="errorLabel">{passwordError}</label>
         </div>
         <br />
-        <div className={"inputContainer"}>
-            <input
-                className={"inputButton"}
-                type="button"
-                onClick={onButtonClick}
-                value={"Log in"} />
+        <div className={"Button"}>
+            <SliderButton clickFunction={onButtonClick} label={"Log in"} />
         </div>
     </div>
     

@@ -1,5 +1,7 @@
 import React from "react"
 import { useNavigate } from "react-router-dom";
+import { SliderButton } from '../../components/sliderButton/SliderButton';
+import './Loginpage.css';
 
 const Home = (props) => {
     const { loggedIn, email } = props
@@ -19,21 +21,13 @@ const Home = (props) => {
         <div className={"titleContainer"}>
             <div>Welcome!</div>
         </div>
-        <div>
-            This is the home page.
-        </div>
+
         <div className={"buttonContainer"}>
-            <input
-                className={"inputButton"}
-                type="button"
-                onClick={onButtonClick}
-                value={loggedIn ? "Log out" : "Log in"} />
+            <SliderButton clickFunction={onButtonClick} label={loggedIn ? "Log out" : "Log in"} />
             {(loggedIn ? <div>
                 Your email address is {email}
             </div> : <div/>)}
         </div>
-
-
     </div>
 }
 

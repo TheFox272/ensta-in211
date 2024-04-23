@@ -7,6 +7,10 @@
     {
       "email": "jean.jean@jean.com",
       "password": "$2b$10$GcII5ej/4pXB/5mbSm7xg.hhkJjETznyReMIIWAbrMlgsILyFLVRO"
+    },
+    {
+      "email": "jean.jean@gmail.com",
+      "password": "$2b$10$Fjk2.7jjq1k9M1kxVurSiOlPVzVyIHJCdhJo9FYRRTuhvcjV5KRAC"
     }
   ]
 }
