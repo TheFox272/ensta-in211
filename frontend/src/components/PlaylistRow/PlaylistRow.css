@@ -1,17 +1,17 @@
-.playlist-row {
+.playlistRow {
     display: flex;
     align-items: center;
 }
 
-.playlist-row .movie-item:not(:last-child) {
+.playlistRowmovie:not(:last-child) {
     margin-right: 10px;
 }
 
-.playlist-row .movie-item:last-child {
+.playlistRowmovie:last-child {
     margin-right: 0;
 }
 
-.playlist-row .add-button {
+.playlistRowaddButton {
     background-color: #4CAF50; /* Couleur de fond */
     border: none; /* Supprime les bordures */
     color: white; /* Couleur du texte */
