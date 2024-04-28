@@ -44,6 +44,9 @@
     text-align: left;
 }
 
-.popup .rightSide button.close-button:hover{
-    cursor: pointer;
+.popup .rightSide .comment-section {
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    height: 450px;
+    margin-bottom: 10px;
 }

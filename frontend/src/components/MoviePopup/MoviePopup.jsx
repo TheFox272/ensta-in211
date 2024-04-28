@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./MoviePopup.css"
 import noPosterImage from "../../pages/Home/noPoster.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SliderButton } from '../sliderButton/SliderButton'
 export const MoviePopup = ({movie, closePopup}) => {
 
+    const [commentsSection, setCommentsSection] = useState(false);
+    const [comments, setComments] = useState([{author: "Jean", content: "Super film !"}, {author: "Fab", content: "Nul !"}])
+
+    const toggleCommentSection = () => setCommentsSection(!commentsSection);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -20,9 +24,20 @@ export const MoviePopup = ({movie, closePopup}) => {
                     <img src={imageUrl} alt={movie.title} />
                 </div>
                 <div className="rightSide">
-                    <h1>{movie.title}</h1>
-                    <p>Release Date : {formatDate(movie.release_date)}</p>
-                    <p>{movie.overview}</p>
+                    {
+                        commentsSection
+                        ? <>
+                        <div className="comment-section">
+                            
+                        </div>
+                        </>
+                        : <>
+                        <h1>{movie.title}</h1>
+                        <p>Release Date : {formatDate(movie.release_date)}</p>
+                        <p>{movie.overview}</p>
+                        </>
+                    }
+                    <SliderButton clickFunction={toggleCommentSection} label={commentsSection ? "Hide Comments" : "Show Comments"}></SliderButton>
                     <SliderButton clickFunction={closePopup} label={"Close"}></SliderButton>
                 </div>
             </div>

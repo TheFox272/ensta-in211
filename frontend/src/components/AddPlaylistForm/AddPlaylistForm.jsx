@@ -3,7 +3,8 @@ import axios from 'axios';
 import './AddPlaylistForm.css';
 
 const DEFAULT_FORM_VALUES = {
-  name: '',
+  playlistname:'',
+  userId: '12',
 };
 
 const useSavePlaylist = () => {
@@ -16,17 +17,17 @@ const useSavePlaylist = () => {
     }, 3000);
   };
 
+
   const savePlaylist = (event, formValues, setFormValues) => {
     // This avoid page reload
     event.preventDefault();
 
     setPlaylistCreationError(null);
-    if (formValues.email === '') {
-      console.error('Missing email, this field is required');
-
+    if (formValues.playlistname === '') {
+      console.error('Missing playlist name, this field is required');
       return;
     }
-
+    console.log('formValues', formValues);
     axios
       .post(`${import.meta.env.VITE_BACKDEND_URL}/playlist/new`, formValues)
       .then(() => {
@@ -56,9 +57,9 @@ function AddPlaylistForm() {
           className="add-playlist-input"
           type="Nom de la playlist"
           placeholder="Nom de la playlist"
-          value={formValues.name}
+          value={formValues.playlistname}
           onChange={(event) =>
-            setFormValues({ ...formValues, name: event.target.value })
+            setFormValues({ ...formValues, playlistname: event.target.value })
           }
         />
         <button className="add-playlist-button" type="submit">

@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PlaylistsTable.css';
+import PlaylistRow from '../PlaylistRow/PlaylistRow';
+
 
 const useFetchPlaylists = () => {
   const [playlists, setPlaylists] = useState([]);
+  const [playlistsname, setPlaylistsname] = useState([]);
   const [playlistsLoadingError, setPlaylistsLoadingError] = useState(null);
 
   useEffect(() => {
@@ -11,49 +14,32 @@ const useFetchPlaylists = () => {
       .get(`${import.meta.env.VITE_BACKDEND_URL}/playlist`)
       .then((response) => {
         setPlaylists(response.data.playlists);
+        const filteredPlaylists = response.data.playlists.map((playlist) => playlist.playlistname);
+        setPlaylistsname(filteredPlaylists);
       })
       .catch((error) => {
         setPlaylistsLoadingError('An error occured while fetching playlists.');
         console.error(error);
       });
   }, []);
-
-  return { playlists, playlistsLoadingError };
+  return {playlists, playlistsname, playlistsLoadingError};
 };
 
-function PlaylistsTable() {
-  const { playlists, playlistsLoadingError } = useFetchPlaylists();
 
-  const deletePlaylist = (playlistId) => {
-    axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlist/${playlistId}`);
-  };
+const PlaylistsTable =() => {
+  const { playlists, playlistsname, playlistsLoadingError } = useFetchPlaylists();
+
+  if (playlistsLoadingError) {
+    return <div>{playlistsLoadingError}</div>;
+  }
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {playlists.map((playlist) => (
-            <tr key={playlist.email}>
-              <td>{playlist.nameplaylist}</td>
-              <td>{playlist.id}</td>
-              <td>
-                <button onClick={() => deletePlaylist(playlists.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {playlistsLoadingError !== null && (
-        <div className="playlists-loading-error">{playlistsLoadingError}</div>
-      )}
+      {playlists.map((playlist) => {
+        return <PlaylistRow key={playlist.id} playlistname={playlist.playlistname}/>;
+      })}
     </div>
   );
-}
+};
 
 export default PlaylistsTable;

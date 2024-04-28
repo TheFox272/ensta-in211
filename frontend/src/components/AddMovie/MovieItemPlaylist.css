@@ -1,5 +1,5 @@
-.movie-item {
-    width: 275px;
+.movie-itemplaylist {
+    width: 200px;
     margin: 10px;
     border: 1px solid var(--text-color);
     border-radius: 5px;
@@ -9,20 +9,24 @@
     margin: 10px;
 }
 
-.poster-container {
-    position: relative;
-    cursor: pointer;
-    width: 275px;
+.movie-itemplaylist.selected {
+    border: 10px solid rgb(206, 221, 70);
 }
 
-.poster-container img {
+.poster-containerplaylist {
+    position: relative;
+    cursor: pointer;
+    width: 200px;
+}
+
+.poster-containerplaylist img {
     width: 100%;
     /* Make the image fill its container */
     display: block;
     /* Remove any extra space around the image */
 }
 
-.basic-info {
+.basic-infoplaylist {
     position: absolute;
     /* Position the basic info absolutely */
     top: 0;
@@ -44,19 +48,19 @@
     text-align: center;
 }
 
-.basic-info h3 {
-    font-size: 26px;
+.basic-infoplaylist h3 {
+    font-size: 10px;
 }
 
-.basic-info p {
+.basic-infoplaylist p {
     margin-top: auto;
-    font-size: 22px;
+    font-size: 10px;
 }
 
-.poster-container:hover .basic-info {
+.poster-containerplaylist:hover .basic-infoplaylist {
     opacity: 1;
 }
 
-.poster-container:hover .description {
+.poster-containerplaylist:hover .description {
     opacity: 1;
 }
