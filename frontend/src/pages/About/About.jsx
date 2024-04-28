@@ -12,23 +12,24 @@ function About() {
   const Desc4 = 'Agathe, une fervente défenseuse de TS au sein de GrosPied, apporte une sensibilité unique et une passion enflammée à l\'équipe. Au-delà de sa passion pour les puzzles et les tasses starbucks, Agathe est également ancienne respo com de TAEP, refusant de tolérer l\'absence d\'esthetique dans ses projets. Son sens inné de la communciation font d\'elle un membre précieux de l\'équipe GrosPied'
   
   const teamMembers = [
-    { name: 'Fabien', description: Desc1, image: image1 },
-    { name: 'Jean', description: Desc2, image: image2 },
-    { name: 'Mathias', description: Desc3, image: image3 },
-    { name: 'Agathe', description: Desc4, image: image4 },
+    { name: 'Fabien', description: Desc1, role:'respo déploiement',image: image1 },
+    { name: 'Jean', description: Desc2, role:'respo user',image: image2 },
+    { name: 'Mathias', description: Desc3, role:'respo popup',image: image3 },
+    { name: 'Agathe', description: Desc4, role:'respo playlist',image: image4 },
   ];
 
   return (
     <div>
       <h1 className="Title">La fine équipe de GrosPied</h1>
-      <div className="Intro1">Depuis 1993, nous nous plions en quatre pour de vos désirs filmatographiques une réalité.</div>
+      <div className="Intro1">Depuis 1993, nous nous plions en quatre pour faire de vos désirs filmatographiques une réalité.</div>
       <div className="Intro2">Découvrez les membres de notre équipe, qui oeuvrent chaque jour pour vous offrir le meilleur du cinéma.</div>
       <div className="About">
         {teamMembers.map((member, index) => (
           <div key={index} className="team-member">
+            <div className="membername">{member.name} </div>
             <img src={member.image} alt={member.name} />
-            <div className="membername">
-            <p>{member.name}</p> </div>
+            <div className="memberrole">
+            {member.role}</div>
             <div className="memberdescription">
             <p>{member.description}</p></div>
           </div>
