@@ -6,7 +6,7 @@ button.sliderButton {
     height: 75px;
     width: 200px;
     background-color: var(--bg-color-dark);
-    overflow:hidden;
+    overflow: hidden;
     position: relative;
     line-height: 1;
     /* transition: background-color .3s; */
@@ -37,6 +37,7 @@ button.sliderButton .background-slider {
     display: block;
     z-index: -1;
 }
+
 button.sliderButton {
     cursor: pointer;
 }

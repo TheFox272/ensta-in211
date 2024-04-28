@@ -8,9 +8,12 @@ const Login = (props) => {
     const [password, setPassword] = useState("")
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
- 
+
+
     const navigate = useNavigate();
-        
+    function togglePopup() {
+        setPopupIsOpen(!popupIsOpen)
+    }
     const onButtonClick = () => {
 
         // Set initial error values to empty
@@ -46,14 +49,16 @@ const Login = (props) => {
             if (accountExists)
                 logIn()
             else
-            // Else, ask user if they want to create a new account and if yes, then log in
+                // Else, ask user if they want to create a new account and if yes, then log in
                 if (window.confirm("An account does not exist with this email address: " + email + ". Do you want to create a new account?")) {
                     logIn()
                 }
-        })        
-  
+        })
+
 
     }
+
+
 
     // Call the server API to check if the given email ID already exists
     const checkAccountExists = (callback) => {
@@ -61,13 +66,13 @@ const Login = (props) => {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
-              },
-            body: JSON.stringify({email})
+            },
+            body: JSON.stringify({ email })
         })
-        .then(r => r.json())
-        .then(r => {
-            callback(r?.userExists)
-        })
+            .then(r => r.json())
+            .then(r => {
+                callback(r?.userExists)
+            })
     }
 
     // Log in a user using email and password
@@ -76,20 +81,20 @@ const Login = (props) => {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
-              },
-            body: JSON.stringify({email, password})
+            },
+            body: JSON.stringify({ email, password })
         })
-        .then(r => r.json())
-        .then(r => {
-            if ('success' === r.message) {
-                localStorage.setItem("user", JSON.stringify({email, token: r.token}))
-                props.setLoggedIn(true)
-                props.setEmail(email)
-                navigate("/")
-            } else {
-                window.alert("Wrong email or password")
-            }
-        })
+            .then(r => r.json())
+            .then(r => {
+                if ('success' === r.message) {
+                    localStorage.setItem("user", JSON.stringify({ email, token: r.token }))
+                    props.setLoggedIn(true)
+                    props.setEmail(email)
+                    navigate("/")
+                } else {
+                    window.alert("Wrong email or password")
+                }
+            })
     }
 
     return <div className={"mainContainer"}>
@@ -119,7 +124,7 @@ const Login = (props) => {
             <SliderButton clickFunction={onButtonClick} label={"Log in"} />
         </div>
     </div>
-    
+
 }
 
 export default Login
