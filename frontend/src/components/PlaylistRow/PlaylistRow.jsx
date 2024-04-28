@@ -1,49 +1,74 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './PlaylistRow.css';
 import MovieItem from '../../pages/Home/MovieItem';
+import AddMovie from '../AddMovie/AddMovie';
 import { MoviePopup } from '../MoviePopup/MoviePopup';
 
-const PlaylistRow = ({playlistname,movielist,AddMovie}) => {
 
-    useEffect(() => {  
-        movielist=getMovies(moviename)
-    },[moviename])
+const PlaylistRow = ({playlistname}) => {
+    const [moviesId, setMoviesId] = useState([]);
+    const [moviesInfo, setMoviesInfo] = useState([]);
+    const [moviesLoadingError, setMoviesLoadingError] = useState(null);
+    const [showAddMovie, setShowAddMovie] = useState(false);
+    const [showSearchBar, setShowSearchBar] = useState(false);
 
-    const fetchMovies = async (url) => {
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-          setMovielist(data.results);
-        } catch (error) {
-          console.error('Error fetching movies:', error);
+
+    useEffect(() => {
+        const fetchMoviesId = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovie/getAll`);
+                const movieIds = response.data.playlistmovies
+                    .filter((movie) => movie.playlistname === playlistname)
+                    .map((movie) => movie.movieId);
+                setMoviesId(movieIds);
+            } catch (error) {
+                setMoviesLoadingError('An error occurred while fetching movies.');
+                console.error(moviesLoadingError);
+            }
+        };
+        fetchMoviesId();
+    }, [playlistname]);
+    
+    useEffect(() => {
+        const fetchMovieInfo = async (movieId) => {
+            try {
+                const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=522d421671cf75c2cba341597d86403a`;
+                const response = await axios.get(url);
+                return response.data;
+            } catch (error) {
+                return null;
+            }
+        };
+
+        const fetchAllMovieInfo = async () => {
+            const allMovieInfo = await Promise.all(moviesId.map(fetchMovieInfo));
+            setMoviesInfo(allMovieInfo);
+        };
+
+        if (moviesId.length > 0) {
+            fetchAllMovieInfo();
         }
-      };
-    
-    const getMovies = async (query) => {
-        const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&include_video=false&language=en-US&query=${query}&page=1&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
-        await fetchMovies(url);
-      };
-    
+    }, [playlistname, moviesId]);
+
     return (
         <div className="playlistRow">
-            <h2 className="playlistRowtitle">{playlistname}</h2>
+            <div className="playlistRowtitle">{playlistname}</div>
             <div className="playlistRowmovies">
-                {movielist.map((moviename) => (
-                    
+                {moviesInfo.map((movie) => {
+                    return (
                     <MovieItem
                         key={movie.id}
                         movie={movie}
-                    />
-                ))}
+                    />);
+                })}
                 <div className="playlistRowaddMovie">
-                    <button className="playlistRowaddButton" onClick={() => AddMovie(movie)}>
-                        +
-                    </button>
+                <Link to={`/add-movie/${playlistname}`}className="playlistRowaddButton">+</Link>
                 </div>
             </div>
         </div>
     );
 }
 
-export default PlaylistRow
+export default PlaylistRow;

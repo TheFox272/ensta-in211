@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
-import './MovieItem.css'; 
-import noPosterImage from './noPoster.png'; 
-import { Link } from 'react-router-dom';
-import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
+import './MovieItemPlaylist.css';
+import noPosterImage from '../../pages/Home/noPoster.png'; 
 
-function MovieItem({ movie, openPopup }) {
+function MovieItemPlaylist({ movie, isSelected, onSelect }) {
     const [isExpanded, setIsExpanded] = useState(false); // State to track expansion state
-
-    const toggleExpansion = () => {
-        setIsExpanded(!isExpanded); // Toggle expansion state
-    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -18,14 +12,13 @@ function MovieItem({ movie, openPopup }) {
     };
 
     const imageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : noPosterImage; // Conditionally render poster or no poster image
-    console.log(movie)
 
     return (
-        <div className="movie-item">
-            <div className="poster-container" onClick={openPopup}>
+        <div className={`movie-itemplaylist ${isSelected ? 'selected' : ''}`}>
+            <div className="poster-containerplaylist" onClick={() => onSelect(movie.id)}>
                 <img src={imageUrl} alt={movie.title} />
                 {!isExpanded && (
-                    <div className="basic-info">
+                    <div className="basic-infoplaylist">
                         <h3>{movie.title}</h3>
                         <p><strong>Release date:<br /></strong> {formatDate(movie.release_date)}</p>
                         <p><strong>Rating:</strong> {movie.vote_average}</p>
@@ -43,4 +36,5 @@ function MovieItem({ movie, openPopup }) {
     );
 }
 
-export default MovieItem;
+
+export default MovieItemPlaylist;
