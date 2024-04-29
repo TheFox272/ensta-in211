@@ -3,21 +3,22 @@
     background-color: rgba(0, 0, 0, .7);
     top: 0;
     bottom: 0;
-    left: 0%;
+    left: 0;
     right: 0;
+    display: flex;
+    justify-content: center;
+
 }
 
 .popup {
     position: fixed;
-    width: 70%;
-    height: 590px;
-    top: 20%;
-    left: 15%;
     background-color: var(--bg-color-dark);
     border-radius: 15px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     box-shadow: 0px 0px 50px rgb(143, 169, 204);
+    top: 10%;
 }
 
 .popup .leftSide, .popup .rightSide {
@@ -35,18 +36,37 @@
 .popup .rightSide {
     padding: 20px;
 }
-.popup .rightSide h1 {
-    font-size: 3em;
+
+.popup .rightSide .overview, .popup .rightSide .comment-section .comment-box {
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-.popup .rightSide p {
+.popup .rightSide .overview h1, .popup .rightSide .comment-section h1{
+    font-size: 3em;
+    text-align: left;
+}
+
+.popup .rightSide .overview p {
     font-size: 1.5em;
     text-align: left;
 }
 
-.popup .rightSide .comment-section {
+.popup .rightSide .comment-section, .popup .rightSide .overview {
+    height: 550px;
+    margin-bottom: 10px;
+    padding: .5em;
+}
+
+.popup .rightSide .comment-box {
     border-radius: 10px;
     background-color: var(--bg-color);
-    height: 450px;
-    margin-bottom: 10px;
+    height: 400px;
+    padding: 10px;
+}
+
+
+.popup .rightSide .button-pack {
+    display: block;
 }

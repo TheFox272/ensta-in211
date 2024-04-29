@@ -1,0 +1,45 @@
+.comment-bubble {
+    position: relative;
+    width: 90%;
+    border-radius: 15px;
+    background-color: var(--comment-bubble-color);
+    text-align: left;
+    margin: auto;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    padding: 1em;
+}
+
+span.author {
+    position: absolute;
+    bottom: -1.2em;
+    right: 1em;
+    font-size: .9em;
+    color: var(--text-color);
+}
+
+span.content {
+    margin-top: 1em;
+    font-size: 1.2em;
+}
+
+.comment-bubble:not(:hover) .upvote, .comment-bubble:not(:hover) .downvote {
+    visibility: hidden;
+}
+
+.comment-bubble .upvote, .comment-bubble .downvote {
+    position: absolute;
+    bottom: -1.2em;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.comment-bubble .upvote {
+    left: 1em;
+}
+
+.comment-bubble .downvote {
+    left: 4em;
+}
