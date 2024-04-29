@@ -4,6 +4,7 @@ import noPosterImage from "../../pages/Home/noPoster.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SliderButton } from '../sliderButton/SliderButton'
 import { CommentBubble } from '../commentBubble/CommentBubble'
+import { NewCommentBar } from '../newCommentBar/NewCommentBar'
 
 export const MoviePopup = ({movie, closePopup}) => {
 
@@ -42,6 +43,7 @@ export const MoviePopup = ({movie, closePopup}) => {
                             <div className="comment-box">
                                 {comments.map((comment, index) => <CommentBubble comment={comment} key={index}/>)}
                             </div>
+                            <NewCommentBar/>
                         </div>
                         : <div className="overview">
                             <h1>{movie.title}</h1>
