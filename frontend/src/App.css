@@ -6,6 +6,7 @@
   --bg-color-transparent: rgba(45, 64, 89, 0.9);
   --text-color: rgb(255, 212, 96);
   --link-color: rgb(240, 123, 63);
+  --comment-bubble-color: rgb(9, 19, 32)
 }
 
 .App {
