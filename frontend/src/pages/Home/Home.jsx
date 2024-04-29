@@ -73,14 +73,32 @@ function Home() {
     }
   };
 
+  const fetchMoviesnumber = async (baseURL,nb) => {
+    try {
+      let allMovies = [];
+      let page = 1;
+      while (allMovies.length < nb) {
+        const response = await fetch(`${baseURL}&page=${page}`);
+        const data = await response.json();
+        allMovies = [...allMovies, ...data.results];
+        page++;
+      }
+      allMovies = allMovies.slice(0, nb); // In case we fetched more than nb movies
+      setMovies(allMovies);
+      console.log(allMovies);
+    } catch (error) {
+      console.error('Error fetching movies:', error);
+    }
+  };
+
   const getMovies = async (query) => {
     const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&include_video=false&language=en-US&query=${query}&page=1&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
     await fetchMovies(url);
   };
 
   const getTopMovies = async () => {
-    const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb';
-    await fetchMovies(url);
+    const baseURL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
+    await fetchMoviesnumber(baseURL, 100);
   };
 
   const handleSearch = async () => {
