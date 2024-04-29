@@ -1,0 +1,57 @@
+.no-blur {
+  filter: blur(0);
+  z-index: 1;
+}
+.title {
+  width: 50%; /* Ajouté, ajustez à la largeur que vous voulez */
+  margin: auto; /* Ajouté */
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.search-container {
+  flex-direction: column; /* Add this line */
+  position: relative; /* Change from fixed to relative */
+  width: 100%;
+  background-color: var(--bg-color-transparent); /* Make the background semi-transparent */
+  display: flex; /* Use flexbox to center the search bar */
+  justify-content: center; /* Center the search bar horizontally */
+  align-items: center; /* Center the search bar vertically */
+}
+  
+.movie-list {
+  position: relative; /* Change from fixed to relative */
+  width: 100%; /* Make the movie list take the full width of the search container */
+  background-color: white; /* Add a background color to the movie list */
+  border: 1px solid #ccc; /* Add a border to the movie list */
+  border-radius: 5px; /* Add some border radius to the movie list */
+  max-height: 400px; /* Limit the height of the movie list */
+  overflow-y: auto; /* Add a scrollbar when the content overflows */
+  justify-content: center;
+}
+
+.search-bar {
+  flex-grow: 2;
+  margin-right: 10px;
+  border-radius: 5px;
+  padding: 5px; /* Add some padding to make the text inside the search bar not too close to its edges */
+  background-color: white; /* Make the search bar white */
+  border: none; /* Add a border to make the search bar visible */
+}
+
+.solid-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.solid-button:hover {
+  background-color: #0056b3;
+}

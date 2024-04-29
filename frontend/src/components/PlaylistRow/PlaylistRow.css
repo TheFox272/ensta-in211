@@ -1,0 +1,42 @@
+.playlistRow {
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+}
+
+.playlistRowtitle {
+    font-size: 20px;
+    font-weight: 800;
+    margin-right: 20px;
+}   
+
+.playlistRowmovies {
+    display: flex;
+    flex-Direction: row;
+    align-Items: center;
+}
+
+.playlistRowaddButton {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    height: 60px;
+    width: 60px;
+    margin: 50px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    display: flex; /* Ajouté */
+    justify-content: center; /* Ajouté */
+    align-items: center; /* Ajouté */
+    margin: 10px;
+    font-weight: 800;
+    font-size: 30px;
+    text-decoration: none; /* Ajouté */
+}
+.playlistRowaddButton:hover {
+    background-color: #0056b3;
+  }

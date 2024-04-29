@@ -57,4 +57,17 @@ playlistRouter.delete("/:playlistId", function (req, res) {
         });
 });
 
+
+playlistRouter.get("/playlistname", function (req, res) {
+    appDataSource
+        .getRepository(Playlist)
+        .find({})
+        .then(function () {
+            res.status(204).json({ message: 'Playlist successfully deleted' });
+        })
+        .catch(function () {
+            res.status(500).json({ message: 'Error while deleting the playlist' });
+        });
+});
+
 export default playlistRouter;
