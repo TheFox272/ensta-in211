@@ -1,15 +1,9 @@
-.Title {
-  text-align: center;
-  text-decoration: underline;
-  color: var(--text-color);
-}
-
-
 .About {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 20px; /* Ajoute un espace entre les colonnes */
+  gap: 20px;
+  /* Ajoute un espace entre les colonnes */
 }
 
 .Intro1 {
@@ -57,7 +51,8 @@
 .team-member .memberdescription {
   margin-top: 0;
   font-size: 17px;
-  text-align: justify; /* Aligne le texte de part et d'autre */
+  text-align: justify;
+  /* Aligne le texte de part et d'autre */
   margin-left: 20px;
   margin-right: 20px;
 }

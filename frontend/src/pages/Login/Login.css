@@ -14,11 +14,36 @@
 .buttonContainer {
     font-size: calc(10px + 2vmin);
     color: var(--text-color);
+    margin-top: 20px;
 }
-
 
 .inputContainer {
     font-size: 30px;
-    margin-bottom: 20px;
     cursor: pointer;
-  }
+}
+
+.wrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    padding-right: 10px;
+}
+
+.errorLabel {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--error-color);
+    padding-left: 50px;
+    height: 18px;
+}
+
+.errorContainer {
+    margin-top: 20px;
+}
