@@ -18,6 +18,22 @@ const getAllComments = async (req, res) => {
 
 commentsRouter.get("/", getAllComments);
 
+const getCommentsByMovieId = async (req, res) => {
+    try {
+        const commentRepository = appDataSource.getRepository(Comment);
+        const comments = (await commentRepository.find({where:{movieId: req.params.movieId}}))
+        console.log("movie id : ", req.params.movieId, typeof req.params.movieId)
+        console.log(comments)
+        res.json(comments);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error while fetching comments' });
+    }
+
+}
+
+commentsRouter.get("/movie/:movieId", getCommentsByMovieId);
+
 const createCommentWithMovie = async (req, res) => {
     try {
         const commentRepository = appDataSource.getRepository(Comment);

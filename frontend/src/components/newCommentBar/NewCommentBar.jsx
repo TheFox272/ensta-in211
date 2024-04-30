@@ -1,18 +1,52 @@
 import React, {useState} from 'react'
 import './NewCommentBar.css'
+import axios from 'axios'
 
-export const NewCommentBar = () => {
+const DEFAULT_COMMENT = {
+    movieId: 0,
+    content: '',
+    date: new Date()
+}
 
-    const [newComment, setNewComment] = useState('')
 
+export const NewCommentBar = ({movieId, refreshComments}) => {
+
+    const [newComment, setNewComment] = useState('');
+
+    const handleCommentPost = (e) => {
+        e.preventDefault();
+        console.log("Clicked, ", newComment, refreshComments)
+
+        if(newComment !== "") {
+            axios
+            .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/new`, {
+                movieId: movieId.toInteger,
+                content: newComment,
+                date: new Date()
+            })
+            .then(() => {
+                console.log('Comment posted')
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+            setNewComment("");
+            setTimeout(refreshComments, "200");
+        }
+    }
 
     return (
         <div className='new-comment-bar'>
-            <form className='new-comment-form'>
+            <form
+                className='new-comment-form'
+                onSubmit={(e) => handleCommentPost(e)}
+            >
                 <input
                     className='new-comment-input'
                     type="text"
                     placeholder='Ajoutez un commentaire'
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
                 />
                 <button className='post-comment-button' type='submit'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
