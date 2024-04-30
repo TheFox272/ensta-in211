@@ -22,9 +22,10 @@ const AddMovie=()=>{
       event.preventDefault();
       if (selectedMovie) {
         axios
-          .post(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovie/new`, {
+          .post(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/new`, {
             playlistname: playlistname,
             movieId: selectedMovie,
+            userId: "12",
           })
           .then((response) => {
             console.log(response.data);
@@ -34,11 +35,11 @@ const AddMovie=()=>{
           });
       }
       setMovieName('');
-      navigate(-1);
-    }
+      navigate('/playlists/')
+    };
   
     const handleCancel = (event) => {
-      navigate(-1);
+      navigate('/playlists/');
     };
   
     useEffect(() => {
