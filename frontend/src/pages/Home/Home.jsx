@@ -4,12 +4,13 @@ import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 import popcorn from './popcorn.svg';
 import './Home.css';
 import { SliderButton } from '../../components/sliderButton/SliderButton';
+import { ScrollButton } from '../../components/ScrollButton/ScrollButton';
 
 function Home() {
   const [movieName, setMovieName] = useState('');
   const [movies, setMovies] = useState([]);
-  const [popupIsOpen, setPopupIsOpen] = useState(false)
-  const [activeMovieIndex, setActiveMovieIndex] = useState(0)
+  const [popupIsOpen, setPopupIsOpen] = useState(false);
+  const [activeMovieIndex, setActiveMovieIndex] = useState(0);
   const [noSearsh, setNoSearch] = useState(true);
 
   useEffect(() => {
@@ -130,6 +131,8 @@ function Home() {
           </div>
         )}
       </header>
+
+      <ScrollButton />
 
       <div className="popUpBox">
         {
