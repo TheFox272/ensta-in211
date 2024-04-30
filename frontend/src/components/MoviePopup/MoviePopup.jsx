@@ -1,31 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./MoviePopup.css"
 import noPosterImage from "../../pages/Home/noPoster.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SliderButton } from '../sliderButton/SliderButton'
 import { CommentBubble } from '../commentBubble/CommentBubble'
+import { NewCommentBar } from '../newCommentBar/NewCommentBar'
+import axios from 'axios'
 
-export const MoviePopup = ({movie, closePopup}) => {
+export const MoviePopup = ({ movie, closePopup }) => {
 
     const [commentsSection, setCommentsSection] = useState(false);
-    const [comments, setComments] = useState([
-        { author: "Jean", content: "Super film !" },
-        { author: "Fab", content: "Nul !" },
-        { author: "Agathe", content: "J'ai adoré !" },
-        { author: "Lucas", content: "Le meilleur film que j'ai jamais vu ! C'était complètement fou !" },
-        { author: "Emma", content: "Je n'ai pas aimé du tout." },
-        { author: "John", content: "Great movie!" },
-        { author: "Sarah", content: "I didn't like it." },
-        { author: "Michael", content: "Highly recommended!" }
-    ]);
+    const [comments, setComments] = useState([]);
+    const [refreshComments, setRefreshComments] = useState(1)
 
     const toggleCommentSection = () => setCommentsSection(!commentsSection);
+
+    const incrementRefreshComments = () => setRefreshComments(refreshComments + 1);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         return date.toLocaleDateString('en-US', options);
     };
+
+    useEffect(() => {
+        axios
+            .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/movie/${movie.id}`)
+            .then((response) => {
+                setComments(response.data)
+            })
+            .catch((error) => { console.error(error) })
+    }, [refreshComments])
 
     const imageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : noPosterImage
     return (
@@ -37,17 +42,18 @@ export const MoviePopup = ({movie, closePopup}) => {
                 <div className="rightSide">
                     {
                         commentsSection
-                        ? <div className="comment-section">
-                            <h1>Commentaires</h1>
-                            <div className="comment-box">
-                                {comments.map((comment, index) => <CommentBubble comment={comment} key={index}/>)}
+                            ? <div className="comment-section">
+                                <h1>Commentaires</h1>
+                                <div className="comment-box">
+                                    {comments.map((comment, index) => <CommentBubble comment={comment} key={index} />)}
+                                </div>
+                                <NewCommentBar movieId={movie.id} refreshComments={incrementRefreshComments} />
                             </div>
-                        </div>
-                        : <div className="overview">
-                            <h1>{movie.title}</h1>
-                            <p>Release Date : {formatDate(movie.release_date)}</p>
-                            <p>{movie.overview}</p>
-                        </div>
+                            : <div className="overview">
+                                <h1>{movie.title}</h1>
+                                <p>Release Date : {formatDate(movie.release_date)}</p>
+                                <p>{movie.overview}</p>
+                            </div>
                     }
                     <div className="button-pack">
                         <SliderButton clickFunction={toggleCommentSection} label={commentsSection ? "Overview" : "Comments"}></SliderButton>

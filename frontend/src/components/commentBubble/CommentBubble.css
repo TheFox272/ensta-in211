@@ -29,10 +29,9 @@ span.content {
 
 .comment-bubble .upvote, .comment-bubble .downvote {
     position: absolute;
-    bottom: -1.2em;
+    bottom: -.8em;
     height: 30px;
     width: 30px;
-    border-radius: 15px;
     cursor: pointer;
 }
 

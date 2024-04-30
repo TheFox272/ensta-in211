@@ -4,6 +4,6 @@
   align-items: flex-start;
 }
 
-.Playlists-container > :not(:last-child) {
+.Playlists-container> :not(:last-child) {
   margin-bottom: 20px;
 }

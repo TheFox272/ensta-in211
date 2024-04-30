@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SliderButton } from '../../components/sliderButton/SliderButton';
 import './Login.css';
+import user from './user.png';
+import lock from './lock.png';
 
 const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
- 
+
     const navigate = useNavigate();
-        
+
     const onButtonClick = () => {
 
         // Set initial error values to empty
@@ -46,13 +48,11 @@ const Login = (props) => {
             if (accountExists)
                 logIn()
             else
-            // Else, ask user if they want to create a new account and if yes, then log in
+                // Else, ask user if they want to create a new account and if yes, then log in
                 if (window.confirm("An account does not exist with this email address: " + email + ". Do you want to create a new account?")) {
                     logIn()
                 }
-        })        
-  
-
+        })
     }
 
     // Call the server API to check if the given email ID already exists
@@ -61,13 +61,13 @@ const Login = (props) => {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
-              },
-            body: JSON.stringify({email})
+            },
+            body: JSON.stringify({ email })
         })
-        .then(r => r.json())
-        .then(r => {
-            callback(r?.userExists)
-        })
+            .then(r => r.json())
+            .then(r => {
+                callback(r?.userExists)
+            })
     }
 
     // Log in a user using email and password
@@ -76,50 +76,55 @@ const Login = (props) => {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
-              },
-            body: JSON.stringify({email, password})
+            },
+            body: JSON.stringify({ email, password })
         })
-        .then(r => r.json())
-        .then(r => {
-            if ('success' === r.message) {
-                localStorage.setItem("user", JSON.stringify({email, token: r.token}))
-                props.setLoggedIn(true)
-                props.setEmail(email)
-                navigate("/")
-            } else {
-                window.alert("Wrong email or password")
-            }
-        })
+            .then(r => r.json())
+            .then(r => {
+                if ('success' === r.message) {
+                    localStorage.setItem("user", JSON.stringify({ email, token: r.token }))
+                    props.setLoggedIn(true)
+                    props.setEmail(email)
+                    navigate("/")
+                } else {
+                    window.alert("Wrong email or password")
+                }
+            })
     }
 
     return <div className={"mainContainer"}>
         <div className={"titleContainer"}>
-            <div>Login</div>
+            <h1>Login</h1>
         </div>
         <br />
-        <div className={"inputContainer"}>
+        <div className="wrapper">
+            <img src={user} alt="User" className="icon" />
             <input
                 value={email}
                 placeholder="Enter your email here"
                 onChange={ev => setEmail(ev.target.value)}
-                className={"inputBox"} />
-            <label className="errorLabel">{emailError}</label>
+                className={"inputContainer"} />
         </div>
         <br />
-        <div className={"inputContainer"}>
+        <label className="errorLabel">{emailError}</label>
+        <br />
+        <div className="wrapper">
+            <img src={lock} alt="Lock" className="icon" />
             <input
                 value={password}
                 placeholder="Enter your password here"
                 onChange={ev => setPassword(ev.target.value)}
-                className={"inputBox"} />
-            <label className="errorLabel">{passwordError}</label>
+                className={"inputContainer"} />
         </div>
         <br />
-        <div className={"Button"}>
+        <label className="errorLabel">{passwordError}</label>
+
+        <br />
+        <div className={"buttonContainer"}>
             <SliderButton clickFunction={onButtonClick} label={"Log in"} />
         </div>
-    </div>
-    
+    </div >
+
 }
 
 export default Login

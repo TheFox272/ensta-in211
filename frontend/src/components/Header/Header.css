@@ -1,16 +1,30 @@
 .Header-container {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  padding: 5px;
-  font-size: calc(10px + 2vmin);
-}
-
-.Header-container> :not(:last-child) {
-  margin-right: 10px;
+  align-items: center;
+  padding: 10px 0;
+  font-size: calc(12px + 1vmin);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--bg-menu-color);
+  box-shadow: 0 10px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border-bottom: 4px solid var(--bg-color-dark);
 }
 
 .Link {
-  font-weight: 700;
+  font-weight: bold;
   color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.Link:hover {
+  color: darken(var(--link-color), 10%);
+}
+
+.Header-container>*:not(:last-child) {
+  margin-right: 20px;
 }

@@ -60,10 +60,11 @@
 }
 
 .popup .rightSide .comment-box {
-    border-radius: 10px;
+    border-radius: 15px;
     background-color: var(--bg-color);
-    height: 400px;
+    height: 350px;
     padding: 10px;
+    margin-bottom: 15px;
 }
 
 
