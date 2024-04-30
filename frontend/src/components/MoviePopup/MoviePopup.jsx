@@ -3,10 +3,22 @@ import "./MoviePopup.css"
 import noPosterImage from "../../pages/Home/noPoster.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SliderButton } from '../sliderButton/SliderButton'
+import { CommentBubble } from '../commentBubble/CommentBubble'
+import { NewCommentBar } from '../newCommentBar/NewCommentBar'
+
 export const MoviePopup = ({movie, closePopup}) => {
 
     const [commentsSection, setCommentsSection] = useState(false);
-    const [comments, setComments] = useState([{author: "Jean", content: "Super film !"}, {author: "Fab", content: "Nul !"}])
+    const [comments, setComments] = useState([
+        { author: "Jean", content: "Super film !" },
+        { author: "Fab", content: "Nul !" },
+        { author: "Agathe", content: "J'ai adoré !" },
+        { author: "Lucas", content: "Le meilleur film que j'ai jamais vu ! C'était complètement fou !" },
+        { author: "Emma", content: "Je n'ai pas aimé du tout." },
+        { author: "John", content: "Great movie!" },
+        { author: "Sarah", content: "I didn't like it." },
+        { author: "Michael", content: "Highly recommended!" }
+    ]);
 
     const toggleCommentSection = () => setCommentsSection(!commentsSection);
 
@@ -26,19 +38,23 @@ export const MoviePopup = ({movie, closePopup}) => {
                 <div className="rightSide">
                     {
                         commentsSection
-                        ? <>
-                        <div className="comment-section">
-                            
+                        ? <div className="comment-section">
+                            <h1>Commentaires</h1>
+                            <div className="comment-box">
+                                {comments.map((comment, index) => <CommentBubble comment={comment} key={index}/>)}
+                            </div>
+                            <NewCommentBar/>
                         </div>
-                        </>
-                        : <>
-                        <h1>{movie.title}</h1>
-                        <p>Release Date : {formatDate(movie.release_date)}</p>
-                        <p>{movie.overview}</p>
-                        </>
+                        : <div className="overview">
+                            <h1>{movie.title}</h1>
+                            <p>Release Date : {formatDate(movie.release_date)}</p>
+                            <p>{movie.overview}</p>
+                        </div>
                     }
-                    <SliderButton clickFunction={toggleCommentSection} label={commentsSection ? "Hide Comments" : "Show Comments"}></SliderButton>
-                    <SliderButton clickFunction={closePopup} label={"Close"}></SliderButton>
+                    <div className="button-pack">
+                        <SliderButton clickFunction={toggleCommentSection} label={commentsSection ? "Overview" : "Comments"}></SliderButton>
+                        <SliderButton clickFunction={closePopup} label={"Close"}></SliderButton>
+                    </div>
                 </div>
             </div>
         </div>

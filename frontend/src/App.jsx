@@ -7,8 +7,11 @@ import Playlists from './pages/Playlists/Playlists';
 import Users from './pages/Users/Users';
 import Login from './pages/Login/Login';
 import Loginpage from './pages/Loginpage/Loginpage';
+import AddMovie  from './components/AddMovie/AddMovie';
 import { useState } from 'react';
 import { useEffect } from 'react';
+
+
 //import Connect from './pages/Connect/Connect';
 //import AuthProvider from "./components/AuthProvider/AuthProvider";
 
@@ -16,6 +19,7 @@ function App() {
   
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
+
   useEffect(() => {
     // Fetch the user email and token from local storage
     const user = JSON.parse(localStorage.getItem("user"))
@@ -48,6 +52,7 @@ function App() {
             <Route path="/" element={<Loginpage email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
             {/* <Route path="connect" element={<Connect />} /> */}
             <Route path="playlists" element={<Playlists />} />
+            <Route path="add-movie/:playlistname" element={<AddMovie />} />
             <Route path="users" element={<Users />} />
             <Route path="about" element={<About />} />
             <Route path="home" element={<Home />} />
@@ -55,7 +60,6 @@ function App() {
             {setLoggedIn} setEmail={setEmail} />} /> 
           </Routes>
         </Root >
-  
     </div >
   );
 };

@@ -4,36 +4,43 @@ import PlaylistMovies from '../entities/playlistmovie.js';
 
 const playlistmovieRouter = express.Router();
 
-const getAllPlaylistMovies = async (req, res) => {
-    try {
-        const playlistmovieRepository = appDataSource.getRepository(PlaylistMovies);
-        const playlistmovie = await preferenceRepository.find();
-        res.json(comments);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error okkkk' });
-    }
-};
+playlistmovieRouter.get('/getAll', function (req, res) {
+    appDataSource
+      .getRepository(PlaylistMovies)
+      .find({})
+      .then(function (playlistmovies) {
+        res.json({ playlistmovies: playlistmovies });
+      });
+  });
 
-playlistmovieRouter.get("/", getAllPlaylistMovies);
+playlistmovieRouter.get('/playlistname/:playlistname', function (req, res) {
+    appDataSource
+      .getRepository(PlaylistMovies)
+      .find({ playlistname: req.params.playlistname })
+      .then(function (playlistmovies) {
+        res.json({ playlistmovies: playlistmovies });
+      })
+      .catch(function () {
+        res.status(500).json({ message: 'Error while retrieving playlistmovies' });
+      });
+});
 
 const createPlaylistmovie= async (req, res) => {
     try {
         const playlistmovieRepository = appDataSource.getRepository(PlaylistMovies);
 
         // Check if the playlistmovie exists
-        console.log("Movie Id:", req.body.movieId);
-        const playlistmovieId = await playlistmovieRepository.findOneBy({ movieId: req.body.movieId });
+        const playlistmovieId = await playlistmovieRepository.findOneBy({ playlistname:req.body.playlistname, movieId: req.body.movieId});
 
-        // If the movie doesn't exist, return a 404 response
-        if (!playlistmovieId) {
-            res.status(404).json({ message: 'Playlistmovie not found' });
+        // If the movie exists, return a 404 response
+        if (playlistmovieId) {
+            res.status(404).json({ message: 'Playlistmovie already exists' });
             return;
         }
 
         // Create the preference with the movie ID
-        const newPlaylistmovie = playlistRepository.create({
-            playlistId:req.body.playlistId,
+        const newPlaylistmovie = playlistmovieRepository.create({
+            playlistname:req.body.playlistname,
             movieId:req.body.movieId
         });
 
