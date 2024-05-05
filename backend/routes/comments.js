@@ -41,12 +41,27 @@ const createCommentWithMovie = async (req, res) => {
 
         // Check if the movie exists
         console.log("Movie ID:", req.body.movieId);
-        const movie = await movieRepository.findOneBy({ id: req.body.movieId });
+        var movie = await movieRepository.findOneBy({ id: req.body.movieId });
 
-        // If the movie doesn't exist, return a 404 response
+        // If the movie doesn't exist, we create it !
         if (!movie) {
-            res.status(404).json({ message: 'Movie not found' });
-            return;
+            const movieRepository = appDataSource.getRepository(Movie);
+            const newMovie = movieRepository.create({
+                id: req.body.movieId,
+                title: "titre temporaire",
+                year: 0
+            });
+        
+            movieRepository
+                .insert(newMovie)
+                .then(function (newDocument) {
+                    res.status(201).json(newDocument);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    res.status(500).json({ message: 'Error while creating the movie' });
+                });
+            movie = await movieRepository.findOneBy({ id: req.body.movieId });
         }
 
         // Create the comment with the movie ID
