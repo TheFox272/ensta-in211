@@ -19,6 +19,7 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
+  const [uid, setUid] = useState("")
 
   useEffect(() => {
     // Fetch the user email and token from local storage
@@ -49,7 +50,7 @@ function App() {
       <Root>
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/" element={<Loginpage email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+          <Route path="/" element={<Loginpage email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUid={setUid} />} />
           {/* <Route path="connect" element={<Connect />} /> */}
           <Route path="playlists" element={<Playlists />} />
           <Route path="add-movie/:playlistname" element={<AddMovie />} />
@@ -57,7 +58,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="home" element={<Home />} />
           <Route path="login" element={<Login setLoggedIn=
-            {setLoggedIn} setEmail={setEmail} />} />
+            {setLoggedIn} setEmail={setEmail} setUid={setUid} />} />
         </Routes>
       </Root >
     </div >
