@@ -6,14 +6,15 @@ import moviesRouter from './routes/movies.js';
 import commentsRouter from './routes/comments.js';
 import playlistRouter from './routes/playlist.js';
 import playlistmovieRouter from './routes/playlistmovie.js';
+import playlistmovienewRouter from './routes/playlistmovienew.js';
 import authRouter from './routes/auth.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
 import path from 'path';
+import {config as dotenvConfig} from 'dotenv';
 
 const apiRouter = express.Router();
-
 appDataSource
   .initialize()
   .then(() => {
@@ -35,6 +36,7 @@ appDataSource
     apiRouter.use("/comments", commentsRouter);
     apiRouter.use("/playlist", playlistRouter);
     apiRouter.use("/playlistmovie", playlistmovieRouter);
+    apiRouter.use("/playlistmovienew", playlistmovienewRouter);
     apiRouter.use("/auth", authRouter);
 
     // Register API router

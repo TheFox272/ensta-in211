@@ -4,12 +4,13 @@ import { MoviePopup } from '../../components/MoviePopup/MoviePopup';
 import popcorn from './popcorn.svg';
 import './Home.css';
 import { SliderButton } from '../../components/sliderButton/SliderButton';
+import { ScrollButton } from '../../components/ScrollButton/ScrollButton';
 
 function Home() {
   const [movieName, setMovieName] = useState('');
   const [movies, setMovies] = useState([]);
-  const [popupIsOpen, setPopupIsOpen] = useState(false)
-  const [activeMovieIndex, setActiveMovieIndex] = useState(0)
+  const [popupIsOpen, setPopupIsOpen] = useState(false);
+  const [activeMovieIndex, setActiveMovieIndex] = useState(0);
   const [noSearsh, setNoSearch] = useState(true);
 
   useEffect(() => {
@@ -73,14 +74,32 @@ function Home() {
     }
   };
 
+  const fetchMoviesnumber = async (baseURL, nb) => {
+    try {
+      let allMovies = [];
+      let page = 1;
+      while (allMovies.length < nb) {
+        const response = await fetch(`${baseURL}&page=${page}`);
+        const data = await response.json();
+        allMovies = [...allMovies, ...data.results];
+        page++;
+      }
+      allMovies = allMovies.slice(0, nb); // In case we fetched more than nb movies
+      setMovies(allMovies);
+      console.log(allMovies);
+    } catch (error) {
+      console.error('Error fetching movies:', error);
+    }
+  };
+
   const getMovies = async (query) => {
     const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&include_video=false&language=en-US&query=${query}&page=1&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
     await fetchMovies(url);
   };
 
   const getTopMovies = async () => {
-    const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb';
-    await fetchMovies(url);
+    const baseURL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
+    await fetchMoviesnumber(baseURL, 100);
   };
 
   const handleSearch = async () => {
@@ -114,7 +133,7 @@ function Home() {
           placeholder="Search for movies"
           value={movieName}
           onChange={e => setMovieName(e.target.value)}
-          onKeyDown={() => { handleKeyDown(); handleSearch(); }} />
+          onKeyDown={handleKeyDown} />
         <SliderButton clickFunction={handleSearch} label={"Search"} />
         {/* Only display the followings if there is no active searsh */}
         {noSearsh && (
@@ -131,6 +150,8 @@ function Home() {
           </div>
         )}
       </header>
+
+      <ScrollButton />
 
       <div className="popUpBox">
         {

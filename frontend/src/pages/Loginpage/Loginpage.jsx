@@ -48,7 +48,7 @@ const Home = (props) => {
 
     return <div className="mainContainer">
         <div className={"titleContainer"}>
-            <div>Welcome!</div>
+            <h1>Welcome!</h1>
         </div>
 
         <div className={"LogButtonContainer"}>

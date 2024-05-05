@@ -21,9 +21,7 @@ const User = new typeorm.EntitySchema({
       isArray: true,
       default: Array(25).fill('#000000'),
     },
-    hash: {
-      type: 'varchar',
-    },
+    hash: {type: String},
   },
 });
 

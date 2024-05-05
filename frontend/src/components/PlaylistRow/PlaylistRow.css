@@ -23,9 +23,11 @@
     background-color: #007BFF;
     color: white;
     cursor: pointer;
-    height: 60px;
-    width: 60px;
-    margin: 50px;
+    height: 40px;
+    width: 40px;
+    margin: 10px;
+    font-weight: 800;
+    font-size: 30px;
     border-radius: 5px;
     overflow: hidden;
     position: relative;
@@ -38,5 +40,40 @@
     text-decoration: none; /* Ajouté */
 }
 .playlistRowaddButton:hover {
+    background-color: #0056b3;
+  }
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button.playlistdelete-button svg {
+    transform : scale(0.5);
+}
+
+.playlistdelete-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    height: 50px;
+    width: 60px;
+    margin: 10px;
+    font-weight: 800;
+    font-size: 30px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    margin: 10px;
+    font-weight: 800;
+    font-size: 30px;
+    text-decoration: none; /* Ajouté */
+}
+
+.playlistdelete-button:hover {
     background-color: #0056b3;
   }

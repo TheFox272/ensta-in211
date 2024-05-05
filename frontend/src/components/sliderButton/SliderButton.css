@@ -50,5 +50,5 @@ button.sliderButton:hover .background-slider {
 
 
 button.sliderButton:hover span.label {
-    color: #000000;
+    color: var(--bg-color-dark);
 }
