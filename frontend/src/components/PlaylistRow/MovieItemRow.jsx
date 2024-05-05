@@ -31,7 +31,7 @@ function MovieItemRow({ movie, playlistname }) {
     };
 
     const handleDelete = (playlistname, movieId) => {
-        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByNameAndMovieId/${playlistname}/${movieId}`)
+        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByNameAndMovieId/${playlistname}/${movieId}/${userId}`)
         .then(response => {  
             const playlistMovieId = response.data.playlistmoviesnew[0].id;
             axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/${playlistMovieId}`)
