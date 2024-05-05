@@ -1,0 +1,33 @@
+.avatarButton {
+    border-color: var(--text-color);
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    background-color: black;
+    overflow: hidden;
+    position: relative;
+    /* transition: background-color .3s; */
+    z-index: 0;
+    /* margin: 0px; */
+}
+
+button.avatarButton .background-slider {
+    content: '';
+    width: 0;
+    height: 3em;
+    /* background-color: var(--text-color); */
+    transition: .1s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    z-index: -1;
+}
+
+button.avatarButton {
+    cursor: pointer;
+}
+
+button.avatarButton:hover .background-slider {
+    width: 100%;
+}
