@@ -41,9 +41,17 @@ const createCommentWithMovie = async (req, res) => {
 
         // Check if the movie exists
         console.log("Movie ID:", req.body.movieId);
-        var movie = await movieRepository.findOneBy({ id: req.body.movieId });
+        const movieId = await req.body.movieId;
+        var movie = await movieRepository.findOneBy({ id: movieId });
+        
+        // Create the comment with the movie ID
+        const newComment = commentRepository.create({
+            movieId: movieId,
+            content: req.body.content,
+            date: new Date()
+        });
 
-        // If the movie doesn't exist, we create it !
+        // If the movie doesn't exist, we create it, and then we create the comment
         if (!movie) {
             const movieRepository = appDataSource.getRepository(Movie);
             const newMovie = movieRepository.create({
@@ -56,26 +64,29 @@ const createCommentWithMovie = async (req, res) => {
                 .insert(newMovie)
                 .then(function (newDocument) {
                     res.status(201).json(newDocument);
+
+
                 })
                 .catch(function (error) {
                     console.error(error);
                     res.status(500).json({ message: 'Error while creating the movie' });
                 });
-            movie = await movieRepository.findOneBy({ id: req.body.movieId });
+
+            // Save the comment
+            const savedComment = await commentRepository.save(newComment);
+    
+            // Return the created comment => impossible for some reason
+            // res.status(201).json(savedComment);
+
+        } else { // If the movie exists, we create the comment
+
+            // Save the comment
+            const savedComment = await commentRepository.save(newComment);
+    
+            // Return the created comment
+            res.status(201).json(savedComment);
         }
 
-        // Create the comment with the movie ID
-        const newComment = commentRepository.create({
-            movieId: movie.id,
-            content: req.body.content,
-            date: new Date()
-        });
-
-        // Save the comment
-        const savedComment = await commentRepository.save(newComment);
-
-        // Return the created comment
-        res.status(201).json(savedComment);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error while creating the comment' });
