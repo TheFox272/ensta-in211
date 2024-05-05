@@ -15,7 +15,7 @@ export const NewCommentBar = ({movieId, refreshComments}) => {
 
     const handleCommentPost = (e) => {
         e.preventDefault();
-        console.log("Clicked, ", newComment, refreshComments)
+        console.log("Clicked, ", movieId)
 
         if(newComment !== "") {
             axios

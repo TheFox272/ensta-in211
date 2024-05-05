@@ -25,6 +25,7 @@ export const MoviePopup = ({movie, closePopup}) => {
     };
     
     useEffect(() => {
+        console.log("Movie ID:", movie.id, typeof movie.id)
         axios
             .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/movie/${movie.id}`)
             .then((response) => {
