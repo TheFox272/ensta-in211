@@ -13,6 +13,15 @@ playlistRouter.get('/', function (req, res) {
       });
   });
 
+playlistRouter.get('/:userId', function (req, res) {
+appDataSource
+    .getRepository(Playlist)
+    .find({where:{userId: req.params.userId}})
+    .then(function (playlists) {
+    res.json({ playlists: playlists });
+    });
+});
+
 const createPlaylist= async (req, res) => {
     try {
         const playlistRepository = appDataSource.getRepository(Playlist);
@@ -110,10 +119,10 @@ playlistRouter.put("/updateName/:playlistname", async function (req, res) {
         });
 });
 
-playlistRouter.get("/getByName/:playlistname", function (req, res) {
+playlistRouter.get("/getByName/:playlistname/:userId", function (req, res) {
     appDataSource
         .getRepository(Playlist)
-        .find({where:{playlistname: req.params.playlistname}})
+        .find({where:{playlistname: req.params.playlistname, userId: req.params.userId}})
         .then(function () {
             res.status(204).json({ message: 'Playlist successfully deleted' });
         })

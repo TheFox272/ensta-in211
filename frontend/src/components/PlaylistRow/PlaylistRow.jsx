@@ -7,7 +7,7 @@ import AddMovie from '../AddMovie/AddMovie';
 import { MoviePopup } from '../MoviePopup/MoviePopup';
 
 
-const PlaylistRow = ({ playlistname }) => {
+const PlaylistRow = ({ playlistname, userId }) => {
     const [moviesId, setMoviesId] = useState([]);
     const [moviesInfo, setMoviesInfo] = useState([]);
     const [moviesLoadingError, setMoviesLoadingError] = useState(null);
@@ -34,7 +34,7 @@ const PlaylistRow = ({ playlistname }) => {
     };
 
     const handleDeletePlaylist = (playlistname) => {
-        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}`)
+        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${userId}`)
             .then(response => {
                 const playlistMovies = response.data.playlistmoviesnew;
                 const deleteMoviesPromises = playlistMovies.map(movie => {
@@ -64,7 +64,7 @@ const PlaylistRow = ({ playlistname }) => {
     useEffect(() => {
         const fetchMoviesId = async (playlistname) => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${userId}`);
                 const movieIds = response.data.playlistmoviesnew
                     .map((movie) => movie.movieId);
                 setMoviesId(movieIds);

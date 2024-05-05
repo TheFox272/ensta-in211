@@ -51,8 +51,8 @@ function App() {
             {/* <Route path="/" element={<Home />} /> */}
             <Route path="/" element={<Loginpage email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
             {/* <Route path="connect" element={<Connect />} /> */}
-            <Route path="playlists" element={<Playlists />} />
-            <Route path="add-movie/:playlistname" element={<AddMovie />} />
+            <Route path="playlists" element={<Playlists userId={userId}/>} />
+            <Route path="add-movie/:playlistname" element={<AddMovie userId={userId}/>} />
             <Route path="users" element={<Users />} />
             <Route path="about" element={<About />} />
             <Route path="home" element={<Home />} />

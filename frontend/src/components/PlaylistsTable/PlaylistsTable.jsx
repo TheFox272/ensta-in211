@@ -11,7 +11,7 @@ const useFetchPlaylists = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/playlist`)
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/playlist/${userId}`)
       .then((response) => {
         setPlaylists(response.data.playlists);
         const filteredPlaylists = response.data.playlists.map((playlist) => playlist.playlistname);
@@ -36,7 +36,7 @@ const PlaylistsTable = () => {
   return (
     <div>
       {playlists.map((playlist) => {
-        return <PlaylistRow key={playlist.id} playlistname={playlist.playlistname} />;
+        return <PlaylistRow key={playlist.id} playlistname={playlist.playlistname} userId={userId}/>;
       })}
     </div>
   );
