@@ -6,6 +6,7 @@ import moviesRouter from './routes/movies.js';
 import commentsRouter from './routes/comments.js';
 import playlistRouter from './routes/playlist.js';
 import playlistmovieRouter from './routes/playlistmovie.js';
+import authRouter from './routes/auth.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
@@ -27,12 +28,14 @@ appDataSource
     // Register routes
     apiRouter.get('/', (req, res) => {
       res.send('Hello from Express!');
+      //res.setHeader('Access-Control-Allow-Origin', '*');
     });
     apiRouter.use('/users', usersRouter);
     apiRouter.use("/movies", moviesRouter);
     apiRouter.use("/comments", commentsRouter);
     apiRouter.use("/playlist", playlistRouter);
     apiRouter.use("/playlistmovie", playlistmovieRouter);
+    apiRouter.use("/auth", authRouter);
 
     // Register API router
     app.use('/api', apiRouter);

@@ -62,10 +62,12 @@ const Login = (props) => {
 
     // Call the server API to check if the given email ID already exists
     const checkAccountExists = (callback) => {
-        fetch("http://localhost:3080/check-account", {
+        console.log(`${import.meta.env.VITE_BACKDEND_URL}/auth`)
+        fetch("http://localhost:8080/api/auth/check-account", {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({ email })
         })
@@ -77,10 +79,11 @@ const Login = (props) => {
 
     // Log in a user using email and password
     const logIn = () => {
-        fetch("http://localhost:3080/auth", {
+        fetch("http://localhost:8080/auth/", {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({ email, password })
         })
@@ -95,6 +98,18 @@ const Login = (props) => {
                     window.alert("Wrong email or password")
                 }
             })
+        /*
+        axios
+        .post(`${import.meta.env.VITE_BACKDEND_URL}/users/new`, )//formValues)
+        .then(() => {
+          displayCreationSuccessMessage();
+          setFormValues(DEFAULT_FORM_VALUES);
+        })
+        .catch((error) => {
+          setUserCreationError('An error occured while creating new user.');
+          console.error(error);
+        });
+        */
     }
 
     return <div className={"mainContainer"}>

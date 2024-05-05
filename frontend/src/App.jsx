@@ -7,7 +7,7 @@ import Playlists from './pages/Playlists/Playlists';
 import Users from './pages/Users/Users';
 import Login from './pages/Login/Login';
 import Loginpage from './pages/Loginpage/Loginpage';
-import AddMovie  from './components/AddMovie/AddMovie';
+import AddMovie from './components/AddMovie/AddMovie';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 //import AuthProvider from "./components/AuthProvider/AuthProvider";
 
 function App() {
-  
+
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
 
@@ -29,7 +29,7 @@ function App() {
       setLoggedIn(false)
       return
     }
-    
+
     // If the token exists, verify it with the auth server to see if it is valid
     fetch("http://localhost:3080/verify", {
       method: "POST",
@@ -37,29 +37,29 @@ function App() {
         'jwt-token': user.token
       }
     })
-    .then(r => r.json())
-    .then(r => {
-      setLoggedIn('success' === r.message)
-      setEmail(user.email || "")
-    })
+      .then(r => r.json())
+      .then(r => {
+        setLoggedIn('success' === r.message)
+        setEmail(user.email || "")
+      })
   }, [])
-  
+
   return (
     < div className="app" >
-        <Root>
-          <Routes>
-            {/* <Route path="/" element={<Home />} /> */}
-            <Route path="/" element={<Loginpage email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
-            {/* <Route path="connect" element={<Connect />} /> */}
-            <Route path="playlists" element={<Playlists />} />
-            <Route path="add-movie/:playlistname" element={<AddMovie />} />
-            <Route path="users" element={<Users />} />
-            <Route path="about" element={<About />} />
-            <Route path="home" element={<Home />} />
-            <Route path="login" element={<Login setLoggedIn=
-            {setLoggedIn} setEmail={setEmail} />} /> 
-          </Routes>
-        </Root >
+      <Root>
+        <Routes>
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<Loginpage email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+          {/* <Route path="connect" element={<Connect />} /> */}
+          <Route path="playlists" element={<Playlists />} />
+          <Route path="add-movie/:playlistname" element={<AddMovie />} />
+          <Route path="users" element={<Users />} />
+          <Route path="about" element={<About />} />
+          <Route path="home" element={<Home />} />
+          <Route path="login" element={<Login setLoggedIn=
+            {setLoggedIn} setEmail={setEmail} />} />
+        </Routes>
+      </Root >
     </div >
   );
 };

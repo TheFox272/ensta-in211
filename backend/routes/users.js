@@ -5,13 +5,16 @@ import User from '../entities/user.js';
 const router = express.Router();
 
 router.get('/', function (req, res) {
+  //res.setHeader('Access-Control-Allow-Origin', '*');
   appDataSource
     .getRepository(User)
     .find({})
     .then(function (users) {
       res.json({ users: users });
+      
     });
 });
+
 
 router.post('/new', function (req, res) {
   const userRepository = appDataSource.getRepository(User);

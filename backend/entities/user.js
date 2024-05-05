@@ -15,7 +15,15 @@ const User = new typeorm.EntitySchema({
     firstname: { type: String },
     lastname: { type: String },
     //avatar est une liste de string, par défaut, avatar contient 25 fois l'exadécimale correspondant à la couleur noir
-    avatar: { type: [String], default: Array(25).fill('#000000') },
+    //avatar: {type: String, array:true, default: Array(25).fill('#000000')},
+    avatar: {
+      type: 'varchar',
+      isArray: true,
+      default: Array(25).fill('#000000'),
+    },
+    hash: {
+      type: 'varchar',
+    },
   },
 });
 
