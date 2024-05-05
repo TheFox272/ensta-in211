@@ -15,23 +15,23 @@ export const NewCommentBar = ({movieId, refreshComments}) => {
 
     const handleCommentPost = (e) => {
         e.preventDefault();
-        console.log("Clicked, ", newComment, refreshComments)
+        console.log("Clicked, ", movieId)
 
         if(newComment !== "") {
             axios
-            .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/new`, {
-                movieId: movieId.toInteger,
-                content: newComment,
-                date: new Date()
-            })
-            .then(() => {
-                console.log('Comment posted')
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+                .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/new`, {
+                    movieId: movieId,
+                    content: newComment,
+                    date: new Date()
+                })
+                .then(() => {
+                    console.log('Comment posted')
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
             setNewComment("");
-            setTimeout(refreshComments, "200");
+            setTimeout(refreshComments, "500");
         }
     }
 
@@ -47,6 +47,7 @@ export const NewCommentBar = ({movieId, refreshComments}) => {
                     placeholder='Ajoutez un commentaire'
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
+                    autoFocus
                 />
                 <button className='post-comment-button' type='submit'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

@@ -42,26 +42,52 @@ const createCommentWithMovie = async (req, res) => {
 
         // Check if the movie exists
         console.log("Movie ID:", req.body.movieId);
-        const movie = await movieRepository.findOneBy({ id: req.body.movieId });
-
-        // If the movie doesn't exist, return a 404 response
-        if (!movie) {
-            res.status(404).json({ message: 'Movie not found' });
-            return;
-        }
-
+        const movieId = await req.body.movieId;
+        var movie = await movieRepository.findOneBy({ id: movieId });
+        
         // Create the comment with the movie ID
         const newComment = commentRepository.create({
-            movieId: movie.id,
+            movieId: movieId,
             content: req.body.content,
             date: new Date()
         });
 
-        // Save the comment
-        const savedComment = await commentRepository.save(newComment);
+        // If the movie doesn't exist, we create it, and then we create the comment
+        if (!movie) {
+            const movieRepository = appDataSource.getRepository(Movie);
+            const newMovie = movieRepository.create({
+                id: req.body.movieId,
+                title: "titre temporaire",
+                year: 0
+            });
+        
+            movieRepository
+                .insert(newMovie)
+                .then(function (newDocument) {
+                    res.status(201).json(newDocument);
 
-        // Return the created comment
-        res.status(201).json(savedComment);
+
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    res.status(500).json({ message: 'Error while creating the movie' });
+                });
+
+            // Save the comment
+            const savedComment = await commentRepository.save(newComment);
+    
+            // Return the created comment => impossible for some reason
+            // res.status(201).json(savedComment);
+
+        } else { // If the movie exists, we create the comment
+
+            // Save the comment
+            const savedComment = await commentRepository.save(newComment);
+    
+            // Return the created comment
+            res.status(201).json(savedComment);
+        }
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error while creating the comment' });

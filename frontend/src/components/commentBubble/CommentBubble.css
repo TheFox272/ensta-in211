@@ -42,3 +42,17 @@ span.content {
 .comment-bubble .downvote {
     left: 4em;
 }
+
+
+.comment-bubble .upvote .upvote-count-anchor, .comment-bubble .downvote .downvote-count-anchor {
+    position: absolute;
+}
+
+.comment-bubble .upvote .upvote-count-anchor .upvote-count, .comment-bubble .downvote .downvote-count-anchor .downvote-count {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: .8em;
+    color: var(--text-color);
+}

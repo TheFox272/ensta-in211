@@ -24,10 +24,6 @@ function MovieItemRow({ movie, playlistname }) {
         setMousePosition({ x: event.clientX, y: event.clientY });
     };
     
-    const toggleExpansion = () => {
-        setIsExpanded(!isExpanded); // Toggle expansion state
-    };
-
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -35,7 +31,7 @@ function MovieItemRow({ movie, playlistname }) {
     };
 
     const handleDelete = (playlistname, movieId) => {
-        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByNameAndMovieId/${playlistname}/${movieId}`)
+        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByNameAndMovieId/${playlistname}/${movieId}/${userId}`)
         .then(response => {  
             const playlistMovieId = response.data.playlistmoviesnew[0].id;
             axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/${playlistMovieId}`)

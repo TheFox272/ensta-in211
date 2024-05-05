@@ -13,6 +13,15 @@ playlistRouter.get('/', function (req, res) {
       });
   });
 
+playlistRouter.get('/:userId', function (req, res) {
+appDataSource
+    .getRepository(Playlist)
+    .find({where:{userId: req.params.userId}})
+    .then(function (playlists) {
+    res.json({ playlists: playlists });
+    });
+});
+
 const createPlaylist= async (req, res) => {
     try {
         const playlistRepository = appDataSource.getRepository(Playlist);
@@ -82,10 +91,38 @@ playlistRouter.delete("/deleteByName/:playlistname", function (req, res) {
         });
 });
 
-playlistRouter.get("/getByName/:playlistname", function (req, res) {
+playlistRouter.put("/updateName/:playlistname", async function (req, res) {
+    const playlistname =  req.params.playlistname;
+    const newPlaylistName = req.body.newPlaylistName;
+
+    const playlistRepository = appDataSource.getRepository(Playlist);
+    const playlistToUpdate = await playlistRepository.findOne({where :{ playlistname: playlistname }});
+
+    if (!playlistToUpdate) {
+        res.status(404).json({ message: 'Playlist not found' });
+        return;
+    }
+    playlistToUpdate.playlistname = newPlaylistName;
+
+    playlistRepository.save(playlistToUpdate)
+        .then(function () {
+            res.status(204).json({ message: 'Playlist successfully updated',playlistname: playlistname,
+            newPlaylistName: newPlaylistName });
+        })
+        .catch(function (error) {
+            console.error(error);
+            res.status(500).json({ 
+                message: 'Error while updating the playlist',
+                playlistname: playlistname,
+                newPlaylistName: newPlaylistName
+            });
+        });
+});
+
+playlistRouter.get("/getByName/:playlistname/:userId", function (req, res) {
     appDataSource
         .getRepository(Playlist)
-        .find({where:{playlistname: req.params.playlistname}})
+        .find({where:{playlistname: req.params.playlistname, userId: req.params.userId}})
         .then(function () {
             res.status(204).json({ message: 'Playlist successfully deleted' });
         })

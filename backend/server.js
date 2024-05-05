@@ -34,6 +34,7 @@ appDataSource
     apiRouter.use('/users', usersRouter);
     apiRouter.use("/movies", moviesRouter);
     apiRouter.use("/comments", commentsRouter);
+    apiRouter.use("/playlistmovienew", playlistmovienewRouter);
     apiRouter.use("/playlist", playlistRouter);
     apiRouter.use("/playlistmovie", playlistmovieRouter);
     apiRouter.use("/playlistmovienew", playlistmovienewRouter);

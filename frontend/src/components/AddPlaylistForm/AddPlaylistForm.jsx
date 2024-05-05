@@ -3,8 +3,8 @@ import axios from 'axios';
 import './AddPlaylistForm.css';
 
 const DEFAULT_FORM_VALUES = {
-  playlistname:'',
-  userId: '12',
+  playlistname: '',
+  userId: '',
 };
 
 const useSavePlaylist = () => {
@@ -19,7 +19,6 @@ const useSavePlaylist = () => {
 
 
   const savePlaylist = (event, formValues, setFormValues) => {
-    // This avoid page reload
     event.preventDefault();
 
     setPlaylistCreationError(null);
@@ -33,6 +32,7 @@ const useSavePlaylist = () => {
       .then(() => {
         displayCreationSuccessMessage();
         setFormValues(DEFAULT_FORM_VALUES);
+        window.location.reload();
       })
       .catch((error) => {
         setPlaylistCreationError('An error occured while creating new user.');
@@ -43,7 +43,7 @@ const useSavePlaylist = () => {
   return { savePlaylist, playlistCreationError, playlistCreationSuccess };
 };
 
-function AddPlaylistForm() {
+function AddPlaylistForm(userId) {
   const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
   const { savePlaylist, playlistCreationError, playlistCreationSuccess } = useSavePlaylist();
 
@@ -59,7 +59,7 @@ function AddPlaylistForm() {
           placeholder="Nom de la playlist"
           value={formValues.playlistname}
           onChange={(event) =>
-            setFormValues({ ...formValues, playlistname: event.target.value })
+            setFormValues({ ...formValues, playlistname: event.target.value, userId: userId})
           }
         />
         <button className="add-playlist-button" type="submit">
