@@ -4,14 +4,14 @@ import './PlaylistsTable.css';
 import PlaylistRow from '../PlaylistRow/PlaylistRow';
 
 
-const useFetchPlaylists = () => {
+const useFetchPlaylists = (userId) => {
   const [playlists, setPlaylists] = useState([]);
   const [playlistsname, setPlaylistsname] = useState([]);
   const [playlistsLoadingError, setPlaylistsLoadingError] = useState(null);
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/playlist`)
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/playlist/${userId}`)
       .then((response) => {
         setPlaylists(response.data.playlists);
         const filteredPlaylists = response.data.playlists.map((playlist) => playlist.playlistname);
@@ -26,8 +26,8 @@ const useFetchPlaylists = () => {
 };
 
 
-const PlaylistsTable = () => {
-  const { playlists, playlistsname, playlistsLoadingError } = useFetchPlaylists();
+const PlaylistsTable = ({userId}) => {
+  const { playlists, playlistsname, playlistsLoadingError } = useFetchPlaylists(userId);
 
   if (playlistsLoadingError) {
     return <div>{playlistsLoadingError}</div>;
@@ -36,7 +36,7 @@ const PlaylistsTable = () => {
   return (
     <div>
       {playlists.map((playlist) => {
-        return <PlaylistRow key={playlist.id} playlistname={playlist.playlistname} />;
+        return <PlaylistRow key={playlist.id} playlistname={playlist.playlistname} userId={userId}/>;
       })}
     </div>
   );

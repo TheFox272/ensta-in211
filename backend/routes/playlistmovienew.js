@@ -26,12 +26,13 @@ playlistmovienewRouter.get('/getByName/:playlistname', function (req, res) {
         });
 });
 
-playlistmovienewRouter.get('/getByNameAndMovieId/:playlistname/:movieId', function (req, res) {
+playlistmovienewRouter.get('/getByNameAndMovieId/:playlistname/:movieId/:userId', function (req, res) {
     const playlistname = req.params.playlistname;
     const movieId = req.params.movieId;
+    const userId = req.params.userId;
     appDataSource
         .getRepository(PlaylistMoviesNew)
-        .find({where:{playlistname: playlistname, movieId:movieId}})
+        .find({where:{playlistname: playlistname, movieId:movieId,userId:userId}})
         .then(function (playlistmoviesnew) {
         res.json({ playlistmoviesnew: playlistmoviesnew });
         })
@@ -73,10 +74,10 @@ const createPlaylistmovienew= async (req, res) => {
 
 playlistmovienewRouter.post("/new", createPlaylistmovienew);
 
-playlistmovienewRouter.delete("/:playlistmovienewId", function (req, res) {
+playlistmovienewRouter.delete("/:playlistmovienewId/:userId", function (req, res) {
     appDataSource
         .getRepository(PlaylistMoviesNew)
-        .delete({ id: req.params.playlistmovienewId})
+        .delete({ id: req.params.playlistmovienewId,userId:req.params.userId})
         .then(function () {
             res.status(204).json({ message: 'Playlistmovie successfully deleted' });
         })

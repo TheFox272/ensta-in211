@@ -6,7 +6,7 @@ import MovieItemPlaylist from './MovieItemPlaylist';
 import { useParams } from 'react-router-dom';
 
 
-const AddMovie = () => {
+const AddMovie = ({userId}) => {
   const { playlistname } = useParams();
   const [movieName, setMovieName] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -24,7 +24,7 @@ const AddMovie = () => {
       axios.post(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/new`, {
         playlistname: playlistname,
         movieId: selectedMovie,
-        userId: "12",
+        userId: userId,
       })
         .then((response) => {
           console.log(response.data);

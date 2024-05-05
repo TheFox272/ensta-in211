@@ -38,6 +38,7 @@ const getCommentsByMovieId = async (req, res) => {
         console.log(comments)
         res.json(comments);
     } catch (error) {
+        console.log("error")
         console.error(error);
         res.status(500).json({ message: 'Error while fetching comments' });
     }

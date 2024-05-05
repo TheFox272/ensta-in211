@@ -11,6 +11,10 @@
     {
       "email": "jean.jean@gmail.com",
       "password": "$2b$10$Fjk2.7jjq1k9M1kxVurSiOlPVzVyIHJCdhJo9FYRRTuhvcjV5KRAC"
+    },
+    {
+      "email": "fab@gmail.com",
+      "password": "$2b$10$rCcD1YGhhJ5lcMjN17NGCOAvv0Ho/EPY.q3TnF2WlEh7kJbvy9fru"
     }
   ]
 }

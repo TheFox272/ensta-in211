@@ -1,6 +1,7 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Playlist from '../entities/playlist.js';
+import PlaylistMoviesNew from '../entities/playlistmovienew.js';
 
 const playlistRouter = express.Router();
 
@@ -12,6 +13,15 @@ playlistRouter.get('/', function (req, res) {
         res.json({ playlists: playlists });
       });
   });
+
+playlistRouter.get('/:userId', function (req, res) {
+appDataSource
+    .getRepository(Playlist)
+    .find({where:{userId: req.params.userId}})
+    .then(function (playlists) {
+    res.json({ playlists: playlists });
+    });
+});
 
 const createPlaylist= async (req, res) => {
     try {
@@ -69,10 +79,10 @@ playlistRouter.delete("/:playlistId", function (req, res) {
         });
 });
 
-playlistRouter.delete("/deleteByName/:playlistname", function (req, res) {
+playlistRouter.delete("/deleteByName/:playlistname/:userId", function (req, res) {
     appDataSource
         .getRepository(Playlist)
-        .delete({ playlistname: req.params.playlistname})
+        .delete({ playlistname: req.params.playlistname, userId:req.params.userId})
         .then(function () {
             console.log("Playlist deleted");
             res.status(204).json({ message: 'Playlist successfully deleted' });
@@ -82,10 +92,40 @@ playlistRouter.delete("/deleteByName/:playlistname", function (req, res) {
         });
 });
 
-playlistRouter.get("/getByName/:playlistname", function (req, res) {
+playlistRouter.put("/updateName/:playlistname", async function (req, res) {
+    
+    const playlistname =  req.params.playlistname;
+    const newPlaylistName = req.body.newPlaylistName;
+
+    const playlistRepository = appDataSource.getRepository(Playlist);
+    const playlistMovieNewRepository = appDataSource.getRepository(PlaylistMoviesNew);
+
+    try {
+        const updateResult = await playlistRepository.update({ playlistname: playlistname }, { playlistname: newPlaylistName });
+
+        if (updateResult.affected === 0) {
+            res.status(404).json({ message: 'Playlist not found' });
+            return;
+        }
+
+        // Update the playlist name in all playlistmovienew
+        await playlistMovieNewRepository.update({ playlistname: playlistname }, { playlistname: newPlaylistName });
+
+        res.status(204).json({ message: 'Playlist successfully updated', playlistname: playlistname, newPlaylistName: newPlaylistName });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ 
+            message: 'Error while updating the playlist',
+            playlistname: playlistname,
+            newPlaylistName: newPlaylistName
+        });
+    }
+});
+
+playlistRouter.get("/getByName/:playlistname/:userId", function (req, res) {
     appDataSource
         .getRepository(Playlist)
-        .find({where:{playlistname: req.params.playlistname}})
+        .find({where:{playlistname: req.params.playlistname, userId: req.params.userId}})
         .then(function () {
             res.status(204).json({ message: 'Playlist successfully deleted' });
         })
