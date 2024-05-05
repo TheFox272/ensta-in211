@@ -54,7 +54,7 @@ const AddMovie = () => {
 
   return (
     <div className="playlist-row">
-      <div className='title'>Ajouter un film à la playlist {playlistname}</div>
+      <div className='title'>Ajouter un film à la playlist : "{playlistname}"</div>
       <div className="no-blur">
 
         <div className="search-container">

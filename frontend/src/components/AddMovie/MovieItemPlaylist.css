@@ -1,5 +1,6 @@
 .movie-itemplaylist {
     width: 200px;
+    height: 300px;
     margin: 10px;
     border: 1px solid var(--text-color);
     border-radius: 5px;
@@ -31,10 +32,11 @@
     position: relative;
     cursor: pointer;
     width: 200px;
+    height:100%;
 }
 
 .poster-containerplaylist img {
-    width: 100%;
+    height: 100%;
     /* Make the image fill its container */
     display: block;
     /* Remove any extra space around the image */
