@@ -151,13 +151,11 @@ function Home() {
         )}
       </header>
 
-      <ScrollButton />
-
       <div className="popUpBox">
         {
           popupIsOpen ?
             <MoviePopup movie={movies[activeMovieIndex]} closePopup={() => togglePopup(0)}>Test</MoviePopup>
-            : null
+            : <ScrollButton />
         }
       </div>
     </div>

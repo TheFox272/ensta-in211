@@ -47,6 +47,7 @@ export const NewCommentBar = ({movieId, refreshComments}) => {
                     placeholder='Ajoutez un commentaire'
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
+                    autoFocus
                 />
                 <button className='post-comment-button' type='submit'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
