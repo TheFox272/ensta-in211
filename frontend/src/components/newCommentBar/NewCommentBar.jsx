@@ -19,19 +19,19 @@ export const NewCommentBar = ({movieId, refreshComments}) => {
 
         if(newComment !== "") {
             axios
-            .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/new`, {
-                movieId: movieId.toInteger,
-                content: newComment,
-                date: new Date()
-            })
-            .then(() => {
-                console.log('Comment posted')
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+                .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/new`, {
+                    movieId: movieId,
+                    content: newComment,
+                    date: new Date()
+                })
+                .then(() => {
+                    console.log('Comment posted')
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
             setNewComment("");
-            setTimeout(refreshComments, "200");
+            setTimeout(refreshComments, "500");
         }
     }
 
