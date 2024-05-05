@@ -83,31 +83,29 @@ playlistRouter.delete("/deleteByName/:playlistname", function (req, res) {
 });
 
 playlistRouter.put("/updateName/:playlistname", async function (req, res) {
+    
     const playlistname =  req.params.playlistname;
     const newPlaylistName = req.body.newPlaylistName;
 
     const playlistRepository = appDataSource.getRepository(Playlist);
-    const playlistToUpdate = await playlistRepository.findOne({where :{ playlistname: playlistname }});
 
-    if (!playlistToUpdate) {
-        res.status(404).json({ message: 'Playlist not found' });
-        return;
-    }
-    playlistToUpdate.playlistname = newPlaylistName;
+    try {
+        const updateResult = await playlistRepository.update({ playlistname: playlistname }, { playlistname: newPlaylistName });
 
-    playlistRepository.save(playlistToUpdate)
-        .then(function () {
-            res.status(204).json({ message: 'Playlist successfully updated',playlistname: playlistname,
-            newPlaylistName: newPlaylistName });
-        })
-        .catch(function (error) {
-            console.error(error);
-            res.status(500).json({ 
-                message: 'Error while updating the playlist',
-                playlistname: playlistname,
-                newPlaylistName: newPlaylistName
-            });
+        if (updateResult.affected === 0) {
+            res.status(404).json({ message: 'Playlist not found' });
+            return;
+        }
+
+        res.status(204).json({ message: 'Playlist successfully updated', playlistname: playlistname, newPlaylistName: newPlaylistName });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ 
+            message: 'Error while updating the playlist',
+            playlistname: playlistname,
+            newPlaylistName: newPlaylistName
         });
+    }
 });
 
 playlistRouter.get("/getByName/:playlistname", function (req, res) {
