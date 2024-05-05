@@ -4,10 +4,17 @@
     flex-direction: column;
 }
 
+.playlistRowheader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start; 
+}
+
 .playlistRowtitle {
     font-size: 20px;
     font-weight: 800;
-    margin-right: 20px;
+    margin-right: 10px;
 }   
 
 .playlistRowmovies {
@@ -43,34 +50,37 @@
     background-color: #0056b3;
   }
 
-.buttonsContainer {
+button.playlistdelete-button {
+    /* autres styles du bouton */
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
+button.playlistdelete-button svg {
+    transform : scale(0.4);
+}
 button.playlistdelete-button svg {
     transform : scale(0.5);
 }
 
 .playlistdelete-button {
-    padding: 5px 10px;
+    padding: 1px 4px; 
     border: none;
     border-radius: 5px;
     background-color: #007BFF;
     color: white;
     cursor: pointer;
-    height: 50px;
-    width: 60px;
+    height: 30px; 
+    width: 30px; 
     margin: 10px;
     font-weight: 800;
-    font-size: 30px;
+    font-size: 15px; /* réduit la taille de la police */
     border-radius: 5px;
     overflow: hidden;
     position: relative;
     margin: 10px;
     font-weight: 800;
-    font-size: 30px;
     text-decoration: none; /* Ajouté */
 }
 
