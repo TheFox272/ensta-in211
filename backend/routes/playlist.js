@@ -1,6 +1,7 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Playlist from '../entities/playlist.js';
+import PlaylistMoviesNew from '../entities/playlistmovienew.js';
 
 const playlistRouter = express.Router();
 
@@ -97,6 +98,7 @@ playlistRouter.put("/updateName/:playlistname", async function (req, res) {
     const newPlaylistName = req.body.newPlaylistName;
 
     const playlistRepository = appDataSource.getRepository(Playlist);
+    const playlistMovieNewRepository = appDataSource.getRepository(PlaylistMoviesNew);
 
     try {
         const updateResult = await playlistRepository.update({ playlistname: playlistname }, { playlistname: newPlaylistName });
@@ -105,6 +107,9 @@ playlistRouter.put("/updateName/:playlistname", async function (req, res) {
             res.status(404).json({ message: 'Playlist not found' });
             return;
         }
+
+        // Update the playlist name in all playlistmovienew
+        await playlistMovieNewRepository.update({ playlistname: playlistname }, { playlistname: newPlaylistName });
 
         res.status(204).json({ message: 'Playlist successfully updated', playlistname: playlistname, newPlaylistName: newPlaylistName });
     } catch (error) {
