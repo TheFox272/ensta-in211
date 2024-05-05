@@ -22,11 +22,11 @@ const useFetchPlaylists = () => {
         console.error(error);
       });
   }, []);
-  return {playlists, playlistsname, playlistsLoadingError};
+  return { playlists, playlistsname, playlistsLoadingError };
 };
 
 
-const PlaylistsTable =() => {
+const PlaylistsTable = () => {
   const { playlists, playlistsname, playlistsLoadingError } = useFetchPlaylists();
 
   if (playlistsLoadingError) {
@@ -36,7 +36,7 @@ const PlaylistsTable =() => {
   return (
     <div>
       {playlists.map((playlist) => {
-        return <PlaylistRow key={playlist.id} playlistname={playlist.playlistname}/>;
+        return <PlaylistRow key={playlist.id} playlistname={playlist.playlistname} />;
       })}
     </div>
   );
