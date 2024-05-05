@@ -78,10 +78,10 @@ playlistRouter.delete("/:playlistId", function (req, res) {
         });
 });
 
-playlistRouter.delete("/deleteByName/:playlistname", function (req, res) {
+playlistRouter.delete("/deleteByName/:playlistname/:userId", function (req, res) {
     appDataSource
         .getRepository(Playlist)
-        .delete({ playlistname: req.params.playlistname})
+        .delete({ playlistname: req.params.playlistname, userId:req.params.userId})
         .then(function () {
             console.log("Playlist deleted");
             res.status(204).json({ message: 'Playlist successfully deleted' });
