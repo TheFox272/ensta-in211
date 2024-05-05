@@ -15,6 +15,7 @@ function MovieItemPlaylist({ movie, isSelected, onSelect }) {
 
     return (
         <div className={`movie-itemplaylist ${isSelected ? 'selected' : ''}`}>
+            
             <div className="poster-containerplaylist" onClick={() => onSelect(movie.id)}>
                 <img src={imageUrl} alt={movie.title} />
                 {!isExpanded && (
@@ -32,7 +33,7 @@ function MovieItemPlaylist({ movie, isSelected, onSelect }) {
                     </div>
                 )*/}
             </div>
-        </div>
+            </div>
     );
 }
 

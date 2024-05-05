@@ -6,9 +6,8 @@ import { SliderButton } from '../sliderButton/SliderButton'
 import { CommentBubble } from '../commentBubble/CommentBubble'
 import { NewCommentBar } from '../newCommentBar/NewCommentBar'
 import axios from 'axios'
-import {config as dotenv} from 'dotenv'
 
-export const MoviePopup = ({movie, closePopup}) => {
+export const MoviePopup = ({ movie, closePopup }) => {
 
     const [commentsSection, setCommentsSection] = useState(false);
     const [comments, setComments] = useState([]);
@@ -23,7 +22,7 @@ export const MoviePopup = ({movie, closePopup}) => {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         return date.toLocaleDateString('en-US', options);
     };
-    
+
     useEffect(() => {
         console.log("Movie ID:", movie.id, typeof movie.id)
         axios
@@ -44,18 +43,18 @@ export const MoviePopup = ({movie, closePopup}) => {
                 <div className="rightSide">
                     {
                         commentsSection
-                        ? <div className="comment-section">
-                            <h1>Commentaires</h1>
-                            <div className="comment-box">
-                                {comments.map((comment, index) => <CommentBubble comment={comment} key={index}/>)}
+                            ? <div className="comment-section">
+                                <h1>Commentaires</h1>
+                                <div className="comment-box">
+                                    {comments.map((comment, index) => <CommentBubble comment={comment} key={index} />)}
+                                </div>
+                                <NewCommentBar movieId={movie.id} refreshComments={incrementRefreshComments} />
                             </div>
-                            <NewCommentBar movieId={movie.id} refreshComments={incrementRefreshComments}/>
-                        </div>
-                        : <div className="overview">
-                            <h1>{movie.title}</h1>
-                            <p>Release Date : {formatDate(movie.release_date)}</p>
-                            <p>{movie.overview}</p>
-                        </div>
+                            : <div className="overview">
+                                <h1>{movie.title}</h1>
+                                <p>Release Date : {formatDate(movie.release_date)}</p>
+                                <p>{movie.overview}</p>
+                            </div>
                     }
                     <div className="button-pack">
                         <SliderButton clickFunction={toggleCommentSection} label={commentsSection ? "Overview" : "Comments"}></SliderButton>

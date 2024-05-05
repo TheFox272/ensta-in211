@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1 {
+  text-align: center;
+  color: var(--text-color);
+  padding-top: 30px;
+}
+
+/* On définit ici toute la DA du site */
+:root {
+  --bg-color: rgb(45, 64, 89);
+  --bg-menu-color: rgb(187, 47, 47);
+  --bg-color-dark: rgb(0, 0, 0);
+  --bg-color-light: rgb(62, 89, 126);
+  --bg-color-transparent: rgba(45, 64, 89, 0.9);
+  --text-color: rgb(255, 212, 96);
+  --link-color: rgb(240, 123, 63);
+  --bright-color: rgb(255, 255, 255);
+  --comment-bubble-color: rgb(9, 19, 32);
+  --error-color: rgb(255, 0, 0);
+}

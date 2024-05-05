@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './PlaylistRow.css';
-import MovieItem from '../../pages/Home/MovieItem';
+import MovieItemRow from './MovieItemRow';
 import AddMovie from '../AddMovie/AddMovie';
 import { MoviePopup } from '../MoviePopup/MoviePopup';
 
@@ -14,13 +14,39 @@ const PlaylistRow = ({playlistname}) => {
     const [showAddMovie, setShowAddMovie] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
 
+    const handleDeletePlaylist = (playlistname) => {
+        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}`)
+        .then(response => {
+            const playlistMovies = response.data.playlistmoviesnew;
+            const deleteMoviesPromises = playlistMovies.map(movie => {
+                return axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/${movie.id}`);
+            });
+    
+            Promise.all(deleteMoviesPromises)
+            .then(() => {
+                axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlist/deleteByName/${playlistname}`)
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error("Error deleting playlist:", error);
+                });
+            })
+            .catch(error => {
+                console.error("Error deleting movies:", error);
+            });
+        })
+        .catch(error => {
+            console.error("Error getting playlistmovie:", error);
+        });
+    };
+
 
     useEffect(() => {
-        const fetchMoviesId = async () => {
+        const fetchMoviesId = async (playlistname) => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovie/getAll`);
-                const movieIds = response.data.playlistmovies
-                    .filter((movie) => movie.playlistname === playlistname)
+                const response = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}`);
+                const movieIds = response.data.playlistmoviesnew
                     .map((movie) => movie.movieId);
                 setMoviesId(movieIds);
             } catch (error) {
@@ -28,7 +54,7 @@ const PlaylistRow = ({playlistname}) => {
                 console.error(moviesLoadingError);
             }
         };
-        fetchMoviesId();
+        fetchMoviesId(playlistname);
     }, [playlistname]);
     
     useEffect(() => {
@@ -58,13 +84,16 @@ const PlaylistRow = ({playlistname}) => {
             <div className="playlistRowmovies">
                 {moviesInfo.map((movie) => {
                     return (
-                    <MovieItem
-                        key={movie.id}
-                        movie={movie}
-                    />);
+                    <MovieItemRow key={movie.id} movie={movie} playlistname={playlistname}/>
+                    );
                 })}
+                <div className="buttonsContainer">
                 <div className="playlistRowaddMovie">
                 <Link to={`/add-movie/${playlistname}`}className="playlistRowaddButton">+</Link>
+                </div>
+                <div className="playlistRowdeletePlaylist">
+                <button className='playlistdelete-button' onClick={() => handleDeletePlaylist(playlistname)}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg></button>
+                </div>
                 </div>
             </div>
         </div>

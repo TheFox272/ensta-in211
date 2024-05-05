@@ -57,11 +57,35 @@ playlistRouter.delete("/:playlistId", function (req, res) {
         });
 });
 
-
-playlistRouter.get("/playlistname", function (req, res) {
+playlistRouter.delete("/:playlistId", function (req, res) {
     appDataSource
         .getRepository(Playlist)
-        .find({})
+        .delete({ id: req.params.playlistId })
+        .then(function () {
+            res.status(204).json({ message: 'Playlist successfully deleted' });
+        })
+        .catch(function () {
+            res.status(500).json({ message: 'Error while deleting the playlist' });
+        });
+});
+
+playlistRouter.delete("/deleteByName/:playlistname", function (req, res) {
+    appDataSource
+        .getRepository(Playlist)
+        .delete({ playlistname: req.params.playlistname})
+        .then(function () {
+            console.log("Playlist deleted");
+            res.status(204).json({ message: 'Playlist successfully deleted' });
+        })
+        .catch(function () {
+            res.status(500).json({ message: 'Error while deleting the playlist' });
+        });
+});
+
+playlistRouter.get("/getByName/:playlistname", function (req, res) {
+    appDataSource
+        .getRepository(Playlist)
+        .find({where:{playlistname: req.params.playlistname}})
         .then(function () {
             res.status(204).json({ message: 'Playlist successfully deleted' });
         })

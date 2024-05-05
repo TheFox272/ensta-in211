@@ -1,5 +1,5 @@
-.movie-itemplaylist {
-    width: 200px;
+.movie-item {
+    width: 275px;
     margin: 10px;
     border: 1px solid var(--text-color);
     border-radius: 5px;
@@ -9,38 +9,20 @@
     margin: 10px;
 }
 
-.movie-itemplaylist.selected {
-    border: 10px solid rgb(206, 221, 70);
-}
-
-.delete-button{
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-    margin: 5px;
-}
-
-.poster-containerplaylist:hover .delete-button {
-    opacity: 1;
-}
-
-.poster-containerplaylist {
+.poster-container {
     position: relative;
     cursor: pointer;
-    width: 200px;
+    width: 275px;
 }
 
-.poster-containerplaylist img {
+.poster-container img {
     width: 100%;
     /* Make the image fill its container */
     display: block;
     /* Remove any extra space around the image */
 }
 
-.basic-infoplaylist {
+.basic-info {
     position: absolute;
     /* Position the basic info absolutely */
     top: 0;
@@ -62,19 +44,45 @@
     text-align: center;
 }
 
-.basic-infoplaylist h3 {
-    font-size: 10px;
+.basic-info h3 {
+    font-size: 26px;
 }
 
-.basic-infoplaylist p {
+.basic-info p {
     margin-top: auto;
-    font-size: 10px;
+    font-size: 22px;
 }
 
-.poster-containerplaylist:hover .basic-infoplaylist {
+.poster-container:hover .basic-info {
     opacity: 1;
 }
 
-.poster-containerplaylist:hover .description {
+.poster-container:hover .description {
     opacity: 1;
+}
+
+.delete-button:hover {
+    background-color: #0056b3;
+}
+
+
+.delete-button{
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: rgb(224, 13, 13);
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    margin: 50px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    display: flex; /* Ajouté */
+    justify-content: center; /* Ajouté */
+    align-items: center; /* Ajouté */
+    margin: 10px;
+    font-weight: 800;
+    font-size: 20px;
 }

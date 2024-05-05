@@ -6,7 +6,7 @@ import './Loginpage.css';
 const Home = (props) => {
     const { loggedIn, email } = props
     const navigate = useNavigate();
-    
+
     const onButtonClick = () => {
         if (loggedIn) {
             localStorage.removeItem("user")
@@ -19,14 +19,14 @@ const Home = (props) => {
 
     return <div className="mainContainer">
         <div className={"titleContainer"}>
-            <div>Welcome!</div>
+            <h1>Welcome!</h1>
         </div>
 
         <div className={"buttonContainer"}>
             <SliderButton clickFunction={onButtonClick} label={loggedIn ? "Log out" : "Log in"} />
             {(loggedIn ? <div>
                 Your email address is {email}
-            </div> : <div/>)}
+            </div> : <div />)}
         </div>
     </div>
 }

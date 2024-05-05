@@ -9,6 +9,7 @@
 .titleContainer {
     font-size: calc(10px + 2vmin);
     color: var(--text-color);
+    padding-top: 30px;
 }
 
 .buttonContainer {
