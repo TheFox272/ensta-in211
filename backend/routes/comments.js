@@ -64,7 +64,8 @@ const createCommentWithMovie = async (req, res) => {
             content: req.body.content,
             date: new Date(),
             upVotes: 0,
-            downVotes: 0
+            downVotes: 0,
+            author: req.body.author
         });
 
         // If the movie doesn't exist, we create it, and then we create the comment
@@ -123,18 +124,18 @@ commentsRouter.delete("/:commentId", function (req, res) {
         });
 });
 
-const deleteAllComments = async (req, res) => {
-    try {
-        const commentRepository = appDataSource.getRepository(Comment);
-        await commentRepository.clear();
-        res.status(204).json({ message: 'All comments successfully deleted' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error while deleting all comments' });
-    }
-}
+// const deleteAllComments = async (req, res) => {
+//     try {
+//         const commentRepository = appDataSource.getRepository(Comment);
+//         await commentRepository.clear();
+//         res.status(204).json({ message: 'All comments successfully deleted' });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Error while deleting all comments' });
+//     }
+// }
 
-commentsRouter.delete("/", deleteAllComments);
+// commentsRouter.delete("/", deleteAllComments);
 
 const addUpvote = async (req, res) => {
     try {

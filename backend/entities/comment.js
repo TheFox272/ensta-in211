@@ -29,12 +29,6 @@ const Comment = new typeorm.EntitySchema({
       joinColumn: true,
       onDelete: 'CASCADE',
     },
-    user: {
-      type: 'many-to-one',
-      target: 'User',
-      joinColumn: true,
-      onDelete: 'CASCADE',
-    },
   },
 });
 

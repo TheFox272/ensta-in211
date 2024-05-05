@@ -4,10 +4,12 @@ import "./CommentBubble.css"
 
 export const CommentBubble = ({comments, index, setComments}) => {
 
+  console.log("Comments : ", comments);
   const [hasVotes, setHasVotes] = useState(false);
-  const comment = comments[index];
+  const [comment, setComment] = useState(comments[index]);
 
   useEffect(() => {
+    console.log("§§§§§", comment)
     if(comment.upVotes) {
       if(comment.upVotes > 0) {
         setHasVotes(true);
@@ -19,7 +21,7 @@ export const CommentBubble = ({comments, index, setComments}) => {
         }
       }
     }
-  })
+  }, [])
 
   const refreshCommentVotes = async () => {
     const newComment = await fetch(`${import.meta.env.VITE_BACKDEND_URL}/comments/${comment.id}`);
@@ -51,7 +53,11 @@ export const CommentBubble = ({comments, index, setComments}) => {
 
   return (
     <div className='comment-bubble'>
-        <span className='author'>{typeof(comment.author)!==undefined ? comment.author : "anonyme"}</span>
+        {/*display comment content for debug*/}
+        {
+          console.log(comments, index)
+        }
+        <span className='author'>{comment.author}</span>
         <span className='content'>{comment.content}</span>
 
 
