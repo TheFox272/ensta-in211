@@ -23,36 +23,37 @@ span.content {
     font-size: 1.2em;
 }
 
-.comment-bubble:not(:hover) .upvote, .comment-bubble:not(:hover) .downvote {
+.comment-bubble:not(:hover) .hidden-votes .upvote, .comment-bubble:not(:hover) .hidden-votes .downvote {
     visibility: hidden;
 }
 
-.comment-bubble .upvote, .comment-bubble .downvote {
+.upvote, .downvote {
     position: absolute;
-    bottom: -.8em;
-    height: 30px;
     width: 30px;
+    height: 30px;
+    bottom: -.8em;
     cursor: pointer;
 }
 
-.comment-bubble .upvote {
+.upvote {
     left: 1em;
 }
 
-.comment-bubble .downvote {
+.downvote {
     left: 4em;
 }
 
-
-.comment-bubble .upvote .upvote-count-anchor, .comment-bubble .downvote .downvote-count-anchor {
+.upvote .upvote-number, .downvote .downvote-number {
     position: absolute;
+    left: 50%;
+    font-size: .9em;
+    font-weight: bold;
 }
 
-.comment-bubble .upvote .upvote-count-anchor .upvote-count, .comment-bubble .downvote .downvote-count-anchor .downvote-count {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: .8em;
-    color: var(--text-color);
+.upvote .upvote-number {
+    top: 35%;
+}
+
+.downvote .downvote-number {
+    top: 10%;
 }

@@ -46,7 +46,7 @@ export const MoviePopup = ({ movie, closePopup }) => {
                             ? <div className="comment-section">
                                 <h1>Commentaires</h1>
                                 <div className="comment-box">
-                                    {comments.map((comment, index) => <CommentBubble comment={comment} key={index} />)}
+                                    {comments.map((comment, index) => <CommentBubble comments={comments} key={index} setComments={comments}/>)}
                                 </div>
                                 <NewCommentBar movieId={movie.id} refreshComments={incrementRefreshComments} />
                             </div>

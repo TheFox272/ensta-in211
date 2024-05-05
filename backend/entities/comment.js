@@ -20,11 +20,18 @@ const Comment = new typeorm.EntitySchema({
       type: Number,
       default: 0, // Set default value to 0
     },
+    author: { type: String },
   },
   relations: {
     movie: { 
       type: 'many-to-one',
       target: 'Movie',
+      joinColumn: true,
+      onDelete: 'CASCADE',
+    },
+    user: {
+      type: 'many-to-one',
+      target: 'User',
       joinColumn: true,
       onDelete: 'CASCADE',
     },
