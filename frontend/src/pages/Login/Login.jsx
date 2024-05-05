@@ -121,7 +121,7 @@ const Login = (props) => {
                     localStorage.setItem("user", JSON.stringify({ email, token: r.token }))
                     props.setLoggedIn(true)
                     console.log(r.userId)
-                    props.setUid(r.userId)
+                    props.setUserId(r.userId)
                     console.log(r.token)
                     props.setEmail(email)
                     navigate("/")

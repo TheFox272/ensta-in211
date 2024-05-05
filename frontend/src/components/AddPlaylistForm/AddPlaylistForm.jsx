@@ -43,7 +43,7 @@ const useSavePlaylist = () => {
   return { savePlaylist, playlistCreationError, playlistCreationSuccess };
 };
 
-function AddPlaylistForm(userId) {
+function AddPlaylistForm({userId}) {
   const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
   const { savePlaylist, playlistCreationError, playlistCreationSuccess } = useSavePlaylist();
 

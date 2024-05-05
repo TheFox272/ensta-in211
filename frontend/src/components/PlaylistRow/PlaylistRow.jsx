@@ -38,12 +38,12 @@ const PlaylistRow = ({ playlistname, userId }) => {
             .then(response => {
                 const playlistMovies = response.data.playlistmoviesnew;
                 const deleteMoviesPromises = playlistMovies.map(movie => {
-                    return axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/${movie.id}`);
+                    return axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/${movie.id}/${userId}`);
                 });
 
                 Promise.all(deleteMoviesPromises)
                     .then(() => {
-                        axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlist/deleteByName/${playlistname}`)
+                        axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlist/deleteByName/${playlistname}/${userId}`)
                             .then(() => {
                                 window.location.reload();
                             })

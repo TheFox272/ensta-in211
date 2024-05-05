@@ -74,10 +74,10 @@ const createPlaylistmovienew= async (req, res) => {
 
 playlistmovienewRouter.post("/new", createPlaylistmovienew);
 
-playlistmovienewRouter.delete("/:playlistmovienewId", function (req, res) {
+playlistmovienewRouter.delete("/:playlistmovienewId/:userId", function (req, res) {
     appDataSource
         .getRepository(PlaylistMoviesNew)
-        .delete({ id: req.params.playlistmovienewId})
+        .delete({ id: req.params.playlistmovienewId,userId:req.params.userId})
         .then(function () {
             res.status(204).json({ message: 'Playlistmovie successfully deleted' });
         })

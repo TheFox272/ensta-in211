@@ -4,7 +4,7 @@ import './PlaylistsTable.css';
 import PlaylistRow from '../PlaylistRow/PlaylistRow';
 
 
-const useFetchPlaylists = () => {
+const useFetchPlaylists = (userId) => {
   const [playlists, setPlaylists] = useState([]);
   const [playlistsname, setPlaylistsname] = useState([]);
   const [playlistsLoadingError, setPlaylistsLoadingError] = useState(null);
@@ -26,8 +26,8 @@ const useFetchPlaylists = () => {
 };
 
 
-const PlaylistsTable = () => {
-  const { playlists, playlistsname, playlistsLoadingError } = useFetchPlaylists();
+const PlaylistsTable = ({userId}) => {
+  const { playlists, playlistsname, playlistsLoadingError } = useFetchPlaylists(userId);
 
   if (playlistsLoadingError) {
     return <div>{playlistsLoadingError}</div>;
