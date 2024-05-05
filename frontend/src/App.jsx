@@ -32,7 +32,7 @@ function App() {
     }
 
     // If the token exists, verify it with the auth server to see if it is valid
-    fetch("http://localhost:3080/verify", {
+    fetch("http://localhost:8080/api/verify", {
       method: "POST",
       headers: {
         'jwt-token': user.token
@@ -52,8 +52,8 @@ function App() {
           {/* <Route path="/" element={<Home />} /> */}
           <Route path="/" element={<Loginpage email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUid={setUid} />} />
           {/* <Route path="connect" element={<Connect />} /> */}
-          <Route path="playlists" element={<Playlists userId={userId} />} />
-          <Route path="add-movie/:playlistname" element={<AddMovie userId={userId} />} />
+          <Route path="playlists" element={<Playlists userId={uid} />} />
+          <Route path="add-movie/:playlistname" element={<AddMovie userId={uid} />} />
           <Route path="users" element={<Users />} />
           <Route path="about" element={<About />} />
           <Route path="home" element={<Home />} />
