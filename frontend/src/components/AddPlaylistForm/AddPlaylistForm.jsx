@@ -3,7 +3,7 @@ import axios from 'axios';
 import './AddPlaylistForm.css';
 
 const DEFAULT_FORM_VALUES = {
-  playlistname:'',
+  playlistname: '',
   userId: '12',
 };
 
@@ -33,6 +33,7 @@ const useSavePlaylist = () => {
       .then(() => {
         displayCreationSuccessMessage();
         setFormValues(DEFAULT_FORM_VALUES);
+        window.location.reload();
       })
       .catch((error) => {
         setPlaylistCreationError('An error occured while creating new user.');
