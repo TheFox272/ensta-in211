@@ -13,6 +13,25 @@ const PlaylistRow = ({ playlistname }) => {
     const [moviesLoadingError, setMoviesLoadingError] = useState(null);
     const [showAddMovie, setShowAddMovie] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
+    const [newPlaylistName, setNewPlaylistName] = useState(playlistname); // New state for the new playlist name
+    const [isEditing, setIsEditing] = useState(false); // New state for editing mode
+
+    const handleNameChange = (event) => {
+        setNewPlaylistName(event.target.value);
+    };
+
+    const handleNameSubmit = (event) => {
+        if (event.key === 'Enter') {
+            axios.put(`${import.meta.env.VITE_BACKDEND_URL}/playlist/updateName/${playlistname}`, { newPlaylistName })
+                .then(() => {
+                    setIsEditing(false);
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error("Error updating playlist name:", error);
+                });
+        }
+    };
 
     const handleDeletePlaylist = (playlistname) => {
         axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}`)
@@ -81,7 +100,22 @@ const PlaylistRow = ({ playlistname }) => {
     return (
         <div className="playlistRow">
             <div className='playlistRowheader'>
-                <div className="playlistRowtitle">{playlistname}</div>
+            {isEditing ? (
+                    <input
+                        className="playlistRowtitle"
+                        value={newPlaylistName}
+                        onChange={handleNameChange}
+                        onKeyPress={handleNameSubmit}
+                    />
+                ) : (
+                    <div
+                        className="playlistRowtitle"
+                        onClick={() => setIsEditing(true)}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        {playlistname}
+                    </div>
+                )}
                 <div className="playlistRowdeletePlaylist">
                     <button className='playlistdelete-button' onClick={() => handleDeletePlaylist(playlistname)}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" /></svg></button>
                 </div>
