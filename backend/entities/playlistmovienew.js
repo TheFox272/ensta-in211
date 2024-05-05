@@ -18,14 +18,6 @@ const PlaylistMoviesNew = new typeorm.EntitySchema({
       type: String,
     },
   },
-  relations: {
-    playlist: {
-      target: 'Playlist',
-      type: 'many-to-one',
-      joinColumn: {name: 'playlistname', referencedColumnName: 'playlistname'},
-      onDelete: 'CASCADE',
-    },
-  },
 });
 
 export default PlaylistMoviesNew;
