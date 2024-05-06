@@ -13,11 +13,11 @@ playlistmovienewRouter.get('/getAll', function (req, res) {
       });
   });
 
-playlistmovienewRouter.get('/getByName/:playlistname', function (req, res) {
+playlistmovienewRouter.get('/getByName/:playlistname/:userId', function (req, res) {
     const playlistname = req.params.playlistname;
     appDataSource
         .getRepository(PlaylistMoviesNew)
-        .find({where:{playlistname: playlistname}})
+        .find({where:{playlistname: playlistname, userId:req.params.userId}})
         .then(function (playlistmoviesnew) {
         res.json({ playlistmoviesnew: playlistmoviesnew });
         })
@@ -44,9 +44,7 @@ playlistmovienewRouter.get('/getByNameAndMovieId/:playlistname/:movieId/:userId'
 const createPlaylistmovienew= async (req, res) => {
     try {
         const playlistmovienewRepository = appDataSource.getRepository(PlaylistMoviesNew);
-
-        // Check if the playlistmovie exists
-        const playlistmovieId = await playlistmovienewRepository.findOneBy({ playlistname:req.body.playlistname, movieId: req.body.movieId, userId: req.body.userId});
+        const playlistmovieId = await playlistmovienewRepository.findOneBy({ playlistname:req.body.playlistname, movieId: req.body.movieId, userId: req.params.userId});
 
         // If the movie exists, return a 404 response
         if (playlistmovieId) {
@@ -58,7 +56,7 @@ const createPlaylistmovienew= async (req, res) => {
         const newPlaylistmovienew = playlistmovienewRepository.create({
             playlistname:req.body.playlistname,
             movieId:req.body.movieId,
-            userId:req.body.userId
+            userId:req.params.userId
         });
 
         // Save the preference
@@ -72,7 +70,7 @@ const createPlaylistmovienew= async (req, res) => {
     }
 };
 
-playlistmovienewRouter.post("/new", createPlaylistmovienew);
+playlistmovienewRouter.post("/new/:userId", createPlaylistmovienew);
 
 playlistmovienewRouter.delete("/:playlistmovienewId/:userId", function (req, res) {
     appDataSource

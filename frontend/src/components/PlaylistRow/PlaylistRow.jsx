@@ -5,6 +5,7 @@ import './PlaylistRow.css';
 import MovieItemRow from './MovieItemRow';
 import AddMovie from '../AddMovie/AddMovie';
 import { MoviePopup } from '../MoviePopup/MoviePopup';
+import useTokenVerification from '../VerifyToken/VerifyToken';
 
 
 const PlaylistRow = ({ playlistname, userId }) => {
@@ -15,6 +16,7 @@ const PlaylistRow = ({ playlistname, userId }) => {
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [newPlaylistName, setNewPlaylistName] = useState(playlistname); // New state for the new playlist name
     const [isEditing, setIsEditing] = useState(false); // New state for editing mode
+    const { loggedIn, email, uid } = useTokenVerification();
 
     const handleNameChange = (event) => {
         setNewPlaylistName(event.target.value);
@@ -34,16 +36,16 @@ const PlaylistRow = ({ playlistname, userId }) => {
     };
 
     const handleDeletePlaylist = (playlistname) => {
-        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${userId}`)
+        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${uid}`)
             .then(response => {
                 const playlistMovies = response.data.playlistmoviesnew;
                 const deleteMoviesPromises = playlistMovies.map(movie => {
-                    return axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/${movie.id}/${userId}`);
+                    return axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/${movie.id}/${uid}`);
                 });
 
                 Promise.all(deleteMoviesPromises)
                     .then(() => {
-                        axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlist/deleteByName/${playlistname}/${userId}`)
+                        axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlist/deleteByName/${playlistname}/${uid}`)
                             .then(() => {
                                 window.location.reload();
                             })
@@ -62,9 +64,9 @@ const PlaylistRow = ({ playlistname, userId }) => {
 
 
     useEffect(() => {
-        const fetchMoviesId = async (playlistname) => {
+        const fetchMoviesId = async (playlistname, uid) => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${userId}`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${uid}`);
                 const movieIds = response.data.playlistmoviesnew
                     .map((movie) => movie.movieId);
                 setMoviesId(movieIds);
@@ -73,8 +75,10 @@ const PlaylistRow = ({ playlistname, userId }) => {
                 console.error(moviesLoadingError);
             }
         };
-        fetchMoviesId(playlistname);
-    }, [playlistname]);
+        if (uid) {
+            fetchMoviesId(playlistname, uid);
+        }
+    }, [playlistname, uid]); // Add uid to the dependency array
 
     useEffect(() => {
         const fetchMovieInfo = async (movieId) => {
@@ -100,7 +104,7 @@ const PlaylistRow = ({ playlistname, userId }) => {
     return (
         <div className="playlistRow">
             <div className='playlistRowheader'>
-            {isEditing ? (
+                {isEditing ? (
                     <input
                         className="playlistRowtitle"
                         value={newPlaylistName}
