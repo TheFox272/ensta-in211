@@ -7,7 +7,7 @@ import { CommentBubble } from '../commentBubble/CommentBubble'
 import { NewCommentBar } from '../newCommentBar/NewCommentBar'
 import axios from 'axios'
 
-export const MoviePopup = ({ movie, closePopup }) => {
+export const MoviePopup = ({ movie, closePopup}) => {
 
     const [commentsSection, setCommentsSection] = useState(false);
     const [comments, setComments] = useState([]);

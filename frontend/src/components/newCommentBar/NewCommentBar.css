@@ -2,7 +2,8 @@
     position: relative;
 }
 
-.new-comment-bar form.new-comment-form input.new-comment-input {
+.new-comment-bar form.new-comment-form input.new-comment-input,
+.new-comment-bar form.new-comment-form input.new-comment-input-blocked {
     position: absolute;
     left: 0;
     width: 450px;
@@ -18,7 +19,12 @@
         sans-serif;
 }
 
-.new-comment-bar form.new-comment-form button.post-comment-button {
+.new-comment-bar form.new-comment-form input.new-comment-input-blocked {
+    cursor: not-allowed;
+}
+
+.new-comment-bar form.new-comment-form button.post-comment-button,
+.new-comment-bar form.new-comment-form button.post-comment-button-blocked {
     position: absolute;
     right: 0;
     width: 50px;
@@ -32,6 +38,11 @@
     cursor: pointer;
 }
 
-.new-comment-bar form.new-comment-form button.post-comment-button svg {
+.new-comment-bar form.new-comment-form button.post-comment-button-blocked:hover {
+    cursor:not-allowed;
+}
+
+.new-comment-bar form.new-comment-form button.post-comment-button svg,
+.new-comment-bar form.new-comment-form button.post-comment-button-blocked svg {
     transform: scale(.6) translate(-4px, 0);
 }
