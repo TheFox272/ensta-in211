@@ -13,7 +13,7 @@ function Playlists({ userId }) {
 
     <div className="Playlists-container">
       {loggedIn === false ? (
-        <p>Connectez-vous pour accéder à vos bibliothèques</p>
+        <div className="Message">Connectez-vous pour accéder à vos bibliothèques</div>
       ) : (
         <>
           <h1>Ma bibliothèque de film</h1>

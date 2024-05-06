@@ -8,14 +8,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start; 
+    justify-content: flex-start;
 }
-
-.playlistRowtitle {
-    font-size: 20px;
-    font-weight: 800;
-    margin-right: 10px;
-}   
 
 .playlistRowmovies {
     display: flex;
@@ -25,65 +19,68 @@
 
 .playlistRowaddButton {
     padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
+    background-color: var(--text-color);
+    color: black;
     cursor: pointer;
     height: 40px;
     width: 40px;
-    margin: 10px;
     font-weight: 800;
     font-size: 30px;
     border-radius: 5px;
     overflow: hidden;
     position: relative;
-    display: flex; /* Ajouté */
-    justify-content: center; /* Ajouté */
-    align-items: center; /* Ajouté */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 10px;
     font-weight: 800;
-    font-size: 30px;
-    text-decoration: none; /* Ajouté */
+    text-decoration: none;
 }
+
 .playlistRowaddButton:hover {
-    background-color: #0056b3;
-  }
+    background-color: var(--bg-menu-color);
+}
 
 button.playlistdelete-button {
-    /* autres styles du bouton */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-button.playlistdelete-button svg {
-    transform : scale(0.4);
+.playlistRowtitle {
+    font-size: 30px;
+    font-weight: 800;
+    margin-right: 10px;
+    color: var(--text-color)
 }
+
 button.playlistdelete-button svg {
-    transform : scale(0.5);
+    transform: scale(0.4);
+}
+
+button.playlistdelete-button svg {
+    transform: scale(0.5);
 }
 
 .playlistdelete-button {
-    padding: 1px 4px; 
+    padding: 1px 4px;
     border: none;
     border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
+    background-color: var(--text-color);
     cursor: pointer;
-    height: 30px; 
-    width: 30px; 
+    height: 30px;
+    width: 30px;
     margin: 10px;
     font-weight: 800;
-    font-size: 15px; /* réduit la taille de la police */
+    font-size: 15px;
     border-radius: 5px;
     overflow: hidden;
     position: relative;
     margin: 10px;
     font-weight: 800;
-    text-decoration: none; /* Ajouté */
+    text-decoration: none;
 }
 
 .playlistdelete-button:hover {
-    background-color: #0056b3;
-  }
+    background-color: var(--bg-menu-color);
+}
