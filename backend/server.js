@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import logger from 'morgan';
 import cors from 'cors';
 import usersRouter from './routes/users.js';
@@ -11,8 +12,7 @@ import authRouter from './routes/auth.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
-import path from 'path';
-import {config as dotenvConfig} from 'dotenv';
+// import {config as dotenvConfig} from 'dotenv';
 
 const apiRouter = express.Router();
 appDataSource
@@ -25,29 +25,28 @@ appDataSource
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
-
+    
     // Register routes
-    apiRouter.get('/', (req, res) => {
-      res.send('Hello from Express!');
-      //res.setHeader('Access-Control-Allow-Origin', '*');
-    });
+    // apiRouter.get('/', (req, res) => {
+    //   res.send('Hello from Express!');
+    //   res.setHeader('Access-Control-Allow-Origin', '*');
+    // });
     apiRouter.use('/users', usersRouter);
-    apiRouter.use("/movies", moviesRouter);
-    apiRouter.use("/comments", commentsRouter);
-    apiRouter.use("/playlistmovienew", playlistmovienewRouter);
-    apiRouter.use("/playlist", playlistRouter);
-    apiRouter.use("/playlistmovie", playlistmovieRouter);
-    apiRouter.use("/playlistmovienew", playlistmovienewRouter);
-    apiRouter.use("/auth", authRouter);
-
+    apiRouter.use('/movies', moviesRouter);
+    apiRouter.use('/comments', commentsRouter);
+    apiRouter.use('/playlistmovienew', playlistmovienewRouter);
+    apiRouter.use('/playlist', playlistRouter);
+    apiRouter.use('/playlistmovie', playlistmovieRouter);
+    apiRouter.use('/auth', authRouter);
+    
     // Register API router
     app.use('/api', apiRouter);
-
+    
     // Register frontend
-    const publicPath = new URL("./public", import.meta.url).pathname;
+    const publicPath = new URL('./public', import.meta.url).pathname;
     app.use(express.static(publicPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(publicPath, "index.html"));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(publicPath, 'index.html'));
     });
 
     // Register 404 middleware and error handler
