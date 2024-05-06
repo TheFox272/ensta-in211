@@ -22,7 +22,8 @@ export const NewCommentBar = ({ movieId, refreshComments }) => {
                 .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/new`, {
                     movieId: movieId,
                     content: newComment,
-                    date: new Date()
+                    date: new Date(),
+                    author: "anonyme"
                 })
                 .then(() => {
                     console.log('Comment posted')

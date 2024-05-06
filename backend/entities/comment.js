@@ -20,6 +20,7 @@ const Comment = new typeorm.EntitySchema({
       type: Number,
       default: 0, // Set default value to 0
     },
+    author: { type: String },
   },
   relations: {
     movie: { 
