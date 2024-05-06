@@ -26,6 +26,7 @@ const Home = (props) => {
     function toggleAcceptPopup() {
         setConfirmPopupIsOpen(!confirmPopupIsOpen)
         localStorage.removeItem("user")
+        props.setUid("0")
         props.setLoggedIn(false)
     }
 

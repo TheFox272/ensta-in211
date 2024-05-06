@@ -118,7 +118,7 @@ const Login = (props) => {
             .then(r => r.json())
             .then(r => {
                 if ('success' === r.message) {
-                    localStorage.setItem("user", JSON.stringify({ email, token: r.token }))
+                    localStorage.setItem("user", JSON.stringify({ email, token: r.token, userId: r.userId }))
                     props.setLoggedIn(true)
                     console.log(r.userId)
                     props.setUserId(r.userId)

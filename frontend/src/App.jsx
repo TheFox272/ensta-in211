@@ -19,7 +19,7 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
-  const [userId, setUserId] = useState("")
+  const [userId, setUserId] = useState("0")
 
   useEffect(() => {
     // Fetch the user email and token from local storage
@@ -30,9 +30,9 @@ function App() {
       setLoggedIn(false)
       return
     }
-
+    console.log("user token", user.token)
     // If the token exists, verify it with the auth server to see if it is valid
-    fetch("http://localhost:8080/api/verify", {
+    fetch("http://localhost:8080/api/auth/verify", {
       method: "POST",
       headers: {
         'jwt-token': user.token
@@ -40,8 +40,18 @@ function App() {
     })
       .then(r => r.json())
       .then(r => {
-        setLoggedIn('success' === r.message)
-        setEmail(user.email || "")
+        if ('success' === r.message) {
+          setLoggedIn(true)
+          setEmail(user.email)
+          console.log("user email", user.email)
+        }
+        else {
+          setLoggedIn(false)
+          setUserId("0")
+          console.log(userId)
+        }
+        //setLoggedIn('success' === r.message)
+        //setEmail(user.email || "")
       })
   }, [])
 
@@ -52,8 +62,8 @@ function App() {
           {/* <Route path="/" element={<Home />} /> */}
           <Route path="/" element={<Loginpage email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUid={setUserId} />} />
           {/* <Route path="connect" element={<Connect />} /> */}
-          <Route path="playlists" element={<Playlists userId={uid} />} />
-          <Route path="add-movie/:playlistname" element={<AddMovie userId={uid} />} />
+          <Route path="playlists" element={<Playlists userId={userId} />} />
+          <Route path="add-movie/:playlistname" element={<AddMovie userId={userId} />} />
           <Route path="users" element={<Users />} />
           <Route path="about" element={<About />} />
           <Route path="home" element={<Home />} />

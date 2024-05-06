@@ -6,7 +6,8 @@ import MovieItemPlaylist from './MovieItemPlaylist';
 import { useParams } from 'react-router-dom';
 
 
-const AddMovie = ({userId}) => {
+const AddMovie = ({ userId }) => {
+  console.log("userId", userId);
   const { playlistname } = useParams();
   const [movieName, setMovieName] = useState('');
   const [searchResults, setSearchResults] = useState([]);
