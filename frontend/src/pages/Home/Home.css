@@ -52,6 +52,13 @@
   cursor: pointer;
 }
 
+.SliderButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-scale 3s infinite;

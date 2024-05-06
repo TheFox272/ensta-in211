@@ -33,7 +33,7 @@ function Home() {
       }
       else if (movieQuery === "") {
         setMovieName('');
-        getTopMovies();
+        getPopularMovies();
       }
       else if (movieQuery !== movieName) {
         setMovieName(movieQuery);
@@ -97,24 +97,39 @@ function Home() {
     await fetchMovies(url);
   };
 
-  const getTopMovies = async () => {
+  const getPopularMovies = async () => {
     const baseURL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
     await fetchMoviesnumber(baseURL, 100);
   };
 
+  const getUpcomingMovies = async () => {
+    const baseURL = `https://api.themoviedb.org/3/movie/upcoming?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
+    await fetchMoviesnumber(baseURL, 100);
+  }
+
+  const getNowPlayingMovies = async () => {
+    const baseURL = `https://api.themoviedb.org/3/movie/now_playing?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
+    await fetchMoviesnumber(baseURL, 100);
+  }
+
+  const getTopRatedMovies = async () => {
+    const baseURL = `https://api.themoviedb.org/3/movie/top_rated?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`;
+    await fetchMoviesnumber(baseURL, 100);
+  }
+
   const handleSearch = async () => {
     window.history.pushState({}, '', `?movie=${encodeURIComponent(movieName)}`);
     if (movieName === '') {
-      await getTopMovies();
+      await getPopularMovies();
     }
     else {
       await getMovies(movieName);
     }
   };
 
-  const handleTopSearch = async () => {
+  const handleTopSearch = async (getfunction) => {
     window.history.pushState({}, '', `?movie=`);
-    await getTopMovies();
+    await getfunction();
   };
 
   const handleKeyDown = async (e) => {
@@ -139,7 +154,12 @@ function Home() {
         {noSearsh && (
           <div className="App-void">
             <img src={popcorn} className="App-logo" alt="logo" />
-            <SliderButton clickFunction={handleTopSearch} label={"Top Movies"} />
+            <div className="SlidderButtons">
+              <SliderButton clickFunction={() => handleTopSearch(getPopularMovies)} label={"Popular Movies"} />
+              <SliderButton clickFunction={() => handleTopSearch(getUpcomingMovies)} label={"Upcoming Movies"} />
+              <SliderButton clickFunction={() => handleTopSearch(getNowPlayingMovies)} label={"Now Playing"} />
+              <SliderButton clickFunction={() => handleTopSearch(getTopRatedMovies)} label={"Top Rated Movies"} />
+            </div>
           </div>
         )}
         {!noSearsh && (

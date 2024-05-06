@@ -3,7 +3,7 @@ button.sliderButton {
     font-size: 30px;
     border-color: var(--text-color);
     border-radius: 10px;
-    height: 75px;
+    /*height: 75px;*/
     width: 200px;
     background-color: var(--bg-color-dark);
     overflow: hidden;
@@ -17,12 +17,12 @@ button.sliderButton {
 
 
 button.sliderButton span.label {
-    display: inline-block;
+    display: inline-table;
     transition: color .2s;
     padding: 2px 1.5rem 2px;
     padding-left: .75rem;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    white-space: normal;
+    text-overflow: unset;
     max-width: 150px;
 }
 
