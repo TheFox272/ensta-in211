@@ -29,7 +29,7 @@ function useTokenVerification() {
                 } else {
                     setLoggedIn(false);
                     setEmail("");
-                    setUserId("0");
+                    setUid("0");
                 }
             })
             .catch(error => {
