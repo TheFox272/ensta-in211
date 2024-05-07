@@ -111,17 +111,17 @@ const createCommentWithMovie = async (req, res) => {
 
 commentsRouter.post("/new", createCommentWithMovie);
 
-commentsRouter.delete("/:commentId", function (req, res) {
-    appDataSource
-        .getRepository(Comment)
-        .delete({ id: req.params.commentId })
-        .then(function () {
-            res.status(204).json({ message: 'Comment successfully deleted' });
-        })
-        .catch(function () {
-            res.status(500).json({ message: 'Error while deleting the comment' });
-        });
-});
+// commentsRouter.delete("/:commentId", function (req, res) {
+//     appDataSource
+//         .getRepository(Comment)
+//         .delete({ id: req.params.commentId })
+//         .then(function () {
+//             res.status(204).json({ message: 'Comment successfully deleted' });
+//         })
+//         .catch(function () {
+//             res.status(500).json({ message: 'Error while deleting the comment' });
+//         });
+// });
 
 const deleteAllComments = async (req, res) => {
     try {
@@ -135,36 +135,6 @@ const deleteAllComments = async (req, res) => {
 }
 
 commentsRouter.delete("/", deleteAllComments);
-
-const addUpvote = async (req, res) => {
-    try {
-        const commentRepository = appDataSource.getRepository(Comment);
-        const comment = await commentRepository.findOneBy({ id: req.params.commentId });
-        comment.votes = 1;
-        await commentRepository.save(comment);
-        res.json(comment);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error while adding an upvote' });
-    }
-}
-
-commentsRouter.put("/:commentId/upvote", addUpvote);
-
-const addDownvote = async (req, res) => {
-    try {
-        const commentRepository = appDataSource.getRepository(Comment);
-        const comment = await commentRepository.findOneBy({ id: req.params.commentId });
-        comment.votes = -1;
-        await commentRepository.save(comment);
-        res.json(comment);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error while adding a downvote' });
-    }
-}
-
-commentsRouter.put("/:commentId/downvote", addDownvote);
 
 const getVotesOfComment = async (req, res) => {
     try {
@@ -195,8 +165,17 @@ const addUpvoteToComment = async (req, res) => {
         const voteRepository = appDataSource.getRepository(Vote);
         const commentRepository = appDataSource.getRepository(Comment);
         const comment = await commentRepository.findOneBy({ id: req.body.commentId });
-        // const userId = req.body.userId;
-        console.log(comment);
+        const ghostVote = await voteRepository.findOneBy({ commentId: req.body.commentId, userId: req.body.userId });
+        if (ghostVote) {
+            // Case if their is a vote with the same commentId and userId
+            if (ghostVote.upOrDown === 'up') {
+                res.json({ message: 'You have already upvoted this comment' });
+            } else {
+                ghostVote.upOrDown = 'up';
+                await voteRepository.save(ghostVote);
+                res.json(ghostVote);
+            }
+        } else {
         const vote = voteRepository.create({
             upOrDown: 'up',
             commentId: comment.id,
@@ -204,6 +183,7 @@ const addUpvoteToComment = async (req, res) => {
         });
         await voteRepository.save(vote);
         res.json(vote);
+    }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error while adding an upvote to the comment' });
@@ -217,13 +197,25 @@ const addDownvoteToComment = async (req, res) => {
         const voteRepository = appDataSource.getRepository(Vote);
         const commentRepository = appDataSource.getRepository(Comment);
         const comment = await commentRepository.findOneBy({ id: req.body.commentId });
-        const vote = voteRepository.create({
-            upOrDown: 'down',
-            commentId: comment.id,
-            userId: req.body.userId,
-        });
-        await voteRepository.save(vote);
-        res.json(vote);
+        const ghostVote = await voteRepository.findOneBy({ commentId: req.body.commentId, userId: req.body.userId });
+        if(ghostVote) {
+            // Case if their is a vote with the same commentId and userId
+            if (ghostVote.upOrDown === 'down') {
+                res.json({ message: 'You have already downvoted this comment' });
+            } else {
+                ghostVote.upOrDown = 'down';
+                await voteRepository.save(ghostVote);
+                res.json(ghostVote);
+            }
+        } else {
+            const vote = voteRepository.create({
+                upOrDown: 'down',
+                commentId: comment.id,
+                userId: req.body.userId,
+            });
+            await voteRepository.save(vote);
+            res.json(vote);
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error while adding a downvote to the comment' });
@@ -250,18 +242,18 @@ const userHasVoted = async (req, res) => {
 commentsRouter.get("/:commentId/user/:userId", userHasVoted);
 
 
-// const deleteAllVotes = async (req, res) => {
-//     try {
-//         const voteRepository = appDataSource.getRepository(Vote);
-//         await voteRepository.clear();
-//         res.status(204).json({ message: 'All comments successfully deleted' });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: 'Error while deleting all comments' });
-//     }
-// }
+const deleteAllVotes = async (req, res) => {
+    try {
+        const voteRepository = appDataSource.getRepository(Vote);
+        await voteRepository.clear();
+        res.status(204).json({ message: 'All comments successfully deleted' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error while deleting all comments' });
+    }
+}
 
-// commentsRouter.delete("/votes", deleteAllVotes);
+commentsRouter.delete("/votes", deleteAllVotes);
 
 
 export default commentsRouter;
