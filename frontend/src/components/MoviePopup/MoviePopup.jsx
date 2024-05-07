@@ -24,7 +24,6 @@ export const MoviePopup = ({ movie, closePopup}) => {
     };
 
     useEffect(() => {
-        console.log("Movie ID:", movie.id, typeof movie.id)
         axios
             .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/movie/${movie.id}`)
             .then((response) => {
@@ -47,7 +46,6 @@ export const MoviePopup = ({ movie, closePopup}) => {
                                 <h1>Commentaires</h1>
                                 <div className="comment-box">
                                     {comments.map( function (comment, index) {
-                                        console.log("Comment : ", comment, "index : ", index)
                                         return <CommentBubble comments={comments} index={index} key={index} setComments={setComments}/>
                                     })}
                                 </div>

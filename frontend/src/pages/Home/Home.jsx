@@ -86,7 +86,6 @@ function Home() {
       }
       allMovies = allMovies.slice(0, nb); // In case we fetched more than nb movies
       setMovies(allMovies);
-      console.log(allMovies);
     } catch (error) {
       console.error('Error fetching movies:', error);
     }

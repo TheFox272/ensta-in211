@@ -18,7 +18,6 @@ function MovieItem({ movie, openPopup }) {
     };
 
     const imageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : noPosterImage; // Conditionally render poster or no poster image
-    console.log(movie)
 
     return (
         <div className="movie-item">
