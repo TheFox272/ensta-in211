@@ -27,7 +27,7 @@ span.content {
     visibility: hidden;
 }
 
-.upvote, .downvote {
+.upvote, .upvote-from-user, .downvote, .downvote-from-user {
     position: absolute;
     width: 30px;
     height: 30px;
@@ -35,25 +35,34 @@ span.content {
     cursor: pointer;
 }
 
-.upvote {
+.upvote, .upvote-from-user {
     left: 1em;
 }
 
-.downvote {
+.downvote, .downvote-from-user {
     left: 4em;
 }
 
-.upvote .upvote-number, .downvote .downvote-number {
+.upvote .upvote-number,
+.upvote-from-user .upvote-number,
+.downvote .downvote-number,
+.downvote-from-user .downvote-number {
     position: absolute;
     left: 50%;
     font-size: .9em;
     font-weight: bold;
 }
 
-.upvote .upvote-number {
+.upvote .upvote-number,
+.upvote-from-user .upvote-number  {
     top: 35%;
 }
 
-.downvote .downvote-number {
+.downvote .downvote-number,
+.downvote-from-user .downvote-number {
     top: 10%;
+}
+
+.upvote-from-user, .downvote-from-user {
+    background-color: green;
 }

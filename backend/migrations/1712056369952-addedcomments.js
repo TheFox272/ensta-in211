@@ -12,8 +12,6 @@ export default class Addedcomments1712056369952 {
                 "movieId" integer NOT NULL,
                 "content" character varying NOT NULL,
                 "date" TIMESTAMP NOT NULL,
-                "upVotes" integer NOT NULL,
-                "downVotes" integer NOT NULL,
                 CONSTRAINT "PK_0b0e4bbc8415ec426f87f3a88e2" PRIMARY KEY ("id")
             )
         `);

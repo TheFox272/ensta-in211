@@ -7,19 +7,11 @@ const Comment = new typeorm.EntitySchema({
     id: {
       primary: true,
       generated: 'uuid',
-      type: String,
+      type: 'uuid',
     },
     movieId: { type: Number },
     content: { type: String },
     date: { type: Date },
-    upVotes: { 
-      type: Number,
-      default: 0, // Set default value to 0
-    },
-    downVotes: { 
-      type: Number,
-      default: 0, // Set default value to 0
-    },
     author: { type: String },
   },
   relations: {

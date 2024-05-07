@@ -14,18 +14,20 @@ export const NewCommentBar = ({ movieId, refreshComments }) => {
 
     const [newComment, setNewComment] = useState('');
     const {loggedIn, email, uid} = useTokenVerification();
-    console.log(email);
     const handleCommentPost = (e) => {
         e.preventDefault();
         console.log("Clicked, ", movieId)
 
         if (newComment !== "" && loggedIn) {
+            console.log("Posting comment", uid, email)
             axios
                 .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/new`, {
                     movieId: movieId,
                     content: newComment,
                     date: new Date(),
-                    author: email
+                    author: email,
+                    upVotesId: uid,
+                    downVotesId: uid,
                 })
                 .then(() => {
                     console.log('Comment posted')
