@@ -31,14 +31,14 @@ const AddMovie = ({ userId }) => {
 
         .then((response) => {
           console.log(response.data);
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((error) => {
           console.error(error);
         });
     }
     setMovieName('');
-    navigate('/playlists/')
+    navigate('/playlists/');
   };
 
   const handleCancel = (event) => {
