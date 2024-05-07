@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import './AddPlaylistForm.css';
+import useTokenVerification from '../VerifyToken/VerifyToken';
 
 const DEFAULT_FORM_VALUES = {
   playlistname: '',
@@ -10,6 +11,8 @@ const DEFAULT_FORM_VALUES = {
 const useSavePlaylist = () => {
   const [playlistCreationError, setPlaylistCreationError] = useState(null);
   const [playlistCreationSuccess, setPlaylistCreationSuccess] = useState(null);
+  const { loggedIn, email, uid } = useTokenVerification();
+
   const displayCreationSuccessMessage = () => {
     setPlaylistCreationSuccess('New playlist created successfully');
     setTimeout(() => {
@@ -43,9 +46,11 @@ const useSavePlaylist = () => {
   return { savePlaylist, playlistCreationError, playlistCreationSuccess };
 };
 
-function AddPlaylistForm({userId}) {
+function AddPlaylistForm({ userId }) {
   const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
   const { savePlaylist, playlistCreationError, playlistCreationSuccess } = useSavePlaylist();
+  const { loggedIn, email, uid } = useTokenVerification();
+
 
   return (
     <div>
@@ -59,7 +64,7 @@ function AddPlaylistForm({userId}) {
           placeholder="Nom de la playlist"
           value={formValues.playlistname}
           onChange={(event) =>
-            setFormValues({ ...formValues, playlistname: event.target.value, userId: userId})
+            setFormValues({ ...formValues, playlistname: event.target.value, userId: uid })
           }
         />
         <button className="add-playlist-button" type="submit">

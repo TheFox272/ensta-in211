@@ -5,6 +5,7 @@ import './PlaylistRow.css';
 import MovieItemRow from './MovieItemRow';
 import AddMovie from '../AddMovie/AddMovie';
 import { MoviePopup } from '../MoviePopup/MoviePopup';
+import useTokenVerification from '../VerifyToken/VerifyToken';
 
 
 const PlaylistRow = ({ playlistname, userId }) => {
@@ -15,6 +16,7 @@ const PlaylistRow = ({ playlistname, userId }) => {
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [newPlaylistName, setNewPlaylistName] = useState(playlistname); // New state for the new playlist name
     const [isEditing, setIsEditing] = useState(false); // New state for editing mode
+    const { loggedIn, email, uid } = useTokenVerification();
 
     const handleNameChange = (event) => {
         setNewPlaylistName(event.target.value);
@@ -34,16 +36,16 @@ const PlaylistRow = ({ playlistname, userId }) => {
     };
 
     const handleDeletePlaylist = (playlistname) => {
-        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${userId}`)
+        axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${uid}`)
             .then(response => {
                 const playlistMovies = response.data.playlistmoviesnew;
                 const deleteMoviesPromises = playlistMovies.map(movie => {
-                    return axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/${movie.id}/${userId}`);
+                    return axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/${movie.id}/${uid}`);
                 });
 
                 Promise.all(deleteMoviesPromises)
                     .then(() => {
-                        axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlist/deleteByName/${playlistname}/${userId}`)
+                        axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/playlist/deleteByName/${playlistname}/${uid}`)
                             .then(() => {
                                 window.location.reload();
                             })
@@ -62,9 +64,9 @@ const PlaylistRow = ({ playlistname, userId }) => {
 
 
     useEffect(() => {
-        const fetchMoviesId = async (playlistname) => {
+        const fetchMoviesId = async (playlistname, uid) => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${userId}`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/getByName/${playlistname}/${uid}`);
                 const movieIds = response.data.playlistmoviesnew
                     .map((movie) => movie.movieId);
                 setMoviesId(movieIds);
@@ -73,8 +75,10 @@ const PlaylistRow = ({ playlistname, userId }) => {
                 console.error(moviesLoadingError);
             }
         };
-        fetchMoviesId(playlistname);
-    }, [playlistname]);
+        if (uid) {
+            fetchMoviesId(playlistname, uid);
+        }
+    }, [playlistname, uid]); // Add uid to the dependency array
 
     useEffect(() => {
         const fetchMovieInfo = async (movieId) => {
@@ -100,7 +104,7 @@ const PlaylistRow = ({ playlistname, userId }) => {
     return (
         <div className="playlistRow">
             <div className='playlistRowheader'>
-            {isEditing ? (
+                {isEditing ? (
                     <input
                         className="playlistRowtitle"
                         value={newPlaylistName}
@@ -117,7 +121,7 @@ const PlaylistRow = ({ playlistname, userId }) => {
                     </div>
                 )}
                 <div className="playlistRowdeletePlaylist">
-                    <button className='playlistdelete-button' onClick={() => handleDeletePlaylist(playlistname)}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#ffffff" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" /></svg></button>
+                    <button className='playlistdelete-button' onClick={() => handleDeletePlaylist(playlistname)}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" /></svg></button>
                 </div>
             </div>
             <div className="playlistRowmovies">

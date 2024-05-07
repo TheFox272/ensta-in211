@@ -92,6 +92,19 @@ playlistRouter.delete("/deleteByName/:playlistname/:userId", function (req, res)
         });
 });
 
+playlistRouter.delete("/deleteByName/:playlistname/:userId", function (req, res) {
+    appDataSource
+        .getRepository(Playlist)
+        .delete({ playlistname: req.params.playlistname, userId:req.params.userId})
+        .then(function () {
+            console.log("Playlist deleted");
+            res.status(204).json({ message: 'Playlist successfully deleted' });
+        })
+        .catch(function () {
+            res.status(500).json({ message: 'Error while deleting the playlist' });
+        });
+});
+
 playlistRouter.put("/updateName/:playlistname", async function (req, res) {
     
     const playlistname =  req.params.playlistname;

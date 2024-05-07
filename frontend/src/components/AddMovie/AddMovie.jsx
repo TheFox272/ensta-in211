@@ -4,10 +4,12 @@ import axios from 'axios';
 import './AddMovie.css';
 import MovieItemPlaylist from './MovieItemPlaylist';
 import { useParams } from 'react-router-dom';
+import useTokenVerification from '../VerifyToken/VerifyToken';
 
 
 const AddMovie = ({ userId }) => {
-  console.log("userId", userId);
+  const { loggedIn, email, uid } = useTokenVerification();
+  console.log("userId", uid);
   const { playlistname } = useParams();
   const [movieName, setMovieName] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -22,21 +24,21 @@ const AddMovie = ({ userId }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (selectedMovie) {
-      axios.post(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/new`, {
+      axios.post(`${import.meta.env.VITE_BACKDEND_URL}/playlistmovienew/new/${uid}`, {
         playlistname: playlistname,
-        movieId: selectedMovie,
-        userId: userId,
+        movieId: selectedMovie
       })
+
         .then((response) => {
           console.log(response.data);
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((error) => {
           console.error(error);
         });
     }
     setMovieName('');
-    navigate('/playlists/')
+    navigate('/playlists/');
   };
 
   const handleCancel = (event) => {

@@ -4,6 +4,16 @@
   align-items: flex-start;
 }
 
+.Playlists-container .Message {
+  font-size: 2em;
+  color: var(--text-color);
+  margin-top: 50px;
+}
+
 .Playlists-container> :not(:last-child) {
   margin-bottom: 20px;
+}
+
+.Playlists-container h1 {
+  font-size: 50px;
 }

@@ -5,7 +5,7 @@ button.sliderButton {
     border-radius: 10px;
     /*height: 75px;*/
     width: 200px;
-    background-color: var(--bg-color-dark);
+    background-color: var(--bg-text-color);
     overflow: hidden;
     position: relative;
     line-height: 1;
@@ -13,8 +13,6 @@ button.sliderButton {
     z-index: 0;
     margin: 10px;
 }
-
-
 
 button.sliderButton span.label {
     display: inline-table;

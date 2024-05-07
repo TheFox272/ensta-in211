@@ -2,19 +2,12 @@ import express from 'express';
 import { appDataSource } from '../datasource.js';
 
 import bcrypt from 'bcrypt';
-import cors from 'cors';
 import jwt from 'jsonwebtoken';
-import low from 'lowdb';
-import FileSync from 'lowdb/adapters/FileSync.js';
 import User from '../entities/user.js';
-
-const adapter = new FileSync("./database.json");
-const db = low(adapter);
 
 const authRouter = express.Router();
 
 // Define a JWT secret key. This should be isolated by using env variables for security
-
 
 const jwtSecretKey = "dsfdsfsdfdsvcsvdfgefg"
 /*

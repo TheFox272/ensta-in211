@@ -2,9 +2,12 @@
   filter: blur(0);
   z-index: 1;
 }
+
 .title {
-  width: 50%; /* Ajouté, ajustez à la largeur que vous voulez */
-  margin: auto; /* Ajouté */
+  width: 50%;
+  /* Ajouté, ajustez à la largeur que vous voulez */
+  margin: auto;
+  /* Ajouté */
   text-align: center;
   font-size: 35px;
   font-weight: bold;
@@ -13,23 +16,29 @@
 }
 
 .search-container {
-  flex-direction: column; /* Add this line */
-  position: relative; /* Change from fixed to relative */
+  flex-direction: column;
+  /* Add this line */
+  position: relative;
+  /* Change from fixed to relative */
   width: 100%;
-  background-color: var(--bg-color-transparent); /* Make the background semi-transparent */
-  display: flex; /* Use flexbox to center the search bar */
-  justify-content: center; /* Center the search bar horizontally */
-  align-items: center; /* Center the search bar vertically */
+  background-color: var(--bg-color-transparent);
+  /* Make the background semi-transparent */
+  display: flex;
+  /* Use flexbox to center the search bar */
+  justify-content: center;
+  /* Center the search bar horizontally */
+  align-items: center;
+  /* Center the search bar vertically */
 }
-  
+
 .movie-list {
-  position: relative; /* Change from fixed to relative */
-  width: 100%; /* Make the movie list take the full width of the search container */
-  background-color: white; /* Add a background color to the movie list */
-  border: 1px solid #ccc; /* Add a border to the movie list */
-  border-radius: 5px; /* Add some border radius to the movie list */
-  max-height: 400px; /* Limit the height of the movie list */
-  overflow-y: auto; /* Add a scrollbar when the content overflows */
+  position: relative;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-height: 400px;
+  overflow-y: auto;
   justify-content: center;
 }
 
@@ -37,9 +46,9 @@
   flex-grow: 2;
   margin-right: 10px;
   border-radius: 5px;
-  padding: 5px; /* Add some padding to make the text inside the search bar not too close to its edges */
-  background-color: white; /* Make the search bar white */
-  border: none; /* Add a border to make the search bar visible */
+  padding: 5px;
+  background-color: white;
+  border: none;
 }
 
 .solid-button {
