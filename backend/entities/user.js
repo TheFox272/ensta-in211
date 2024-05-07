@@ -6,7 +6,7 @@ const User = new typeorm.EntitySchema({
     id: {
       primary: true,
       generated : 'uuid',
-      type: String,
+      type: 'uuid',
     },
     email: {
       type: String,

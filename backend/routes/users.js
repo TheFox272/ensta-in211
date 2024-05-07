@@ -54,17 +54,17 @@ router.delete('/:userId', function (req, res) {
     });
 });
 
-// router.delete('/', function (req, res) {
-//   appDataSource
-//     .getRepository(User)
-//     .clear()
-//     .then(function () {
-//       res.status(204).json({ message: 'All users successfully deleted' });
-//     })
-//     .catch(function () {
-//       res.status(500).json({ message: 'Error while deleting all users' });
-//     });
-// });
+router.delete('/', function (req, res) {
+  appDataSource
+    .getRepository(User)
+    .clear()
+    .then(function () {
+      res.status(204).json({ message: 'All users successfully deleted' });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while deleting all users' });
+    });
+});
 
 export default router;
 

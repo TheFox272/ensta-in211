@@ -16,16 +16,6 @@ export default class Cletrangere1712057216715 {
         `);
         await queryRunner.query(`
             ALTER TABLE "comment"
-            ALTER COLUMN "upVotes"
-            SET DEFAULT '0'
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "comment"
-            ALTER COLUMN "downVotes"
-            SET DEFAULT '0'
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "comment"
             ADD CONSTRAINT "FK_aea4918c888422550a85e257894" FOREIGN KEY ("movieId") REFERENCES "movie"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
     }
@@ -33,14 +23,6 @@ export default class Cletrangere1712057216715 {
     async down(queryRunner) {
         await queryRunner.query(`
             ALTER TABLE "comment" DROP CONSTRAINT "FK_aea4918c888422550a85e257894"
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "comment"
-            ALTER COLUMN "downVotes" DROP DEFAULT
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "comment"
-            ALTER COLUMN "upVotes" DROP DEFAULT
         `);
         await queryRunner.query(`
             ALTER TABLE "comment"
